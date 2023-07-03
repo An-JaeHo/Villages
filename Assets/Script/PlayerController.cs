@@ -36,6 +36,7 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         staminaBar.fillAmount = stamina/ maxStamina;
+
         if (Input.GetKeyDown(KeyCode.Space)&& usingTool)
         {
             Action();

@@ -11,7 +11,10 @@ public class WorldTime : MonoBehaviour
     public Sprite[] dayImgaes;
     public Image dayImge;
     [SerializeField]
-    private float dayLength; // in seconds
+    private float dayLength;
+
+    [SerializeField]
+    private float season;
 
     private TimeSpan currentTime;
     private TimeSpan saveDay;
@@ -20,9 +23,11 @@ public class WorldTime : MonoBehaviour
     private void Start()
     {
         StartCoroutine(AddMinute());
+
         //세이브 데이터 저장
         saveDay = new TimeSpan(2,10,20,0);
         currentTime = saveDay;
+        season = 1;
     }
 
     private IEnumerator AddMinute()
@@ -37,6 +42,11 @@ public class WorldTime : MonoBehaviour
         else if(currentTime.Hours == 18)
         {
             dayImge.sprite = dayImgaes[1];
+        }
+
+        if(currentTime.Days %30 ==0)
+        {
+            season++;
         }
 
         yield return new WaitForSeconds(minuteLength);

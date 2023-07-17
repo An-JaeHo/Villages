@@ -11,6 +11,9 @@ public class ObjectController : MonoBehaviour
     public Item item;
     public GameObject LootPrefeb;
 
+    [SerializeField]
+    private WorldTime worldTime;
+
     // item info => tag, scale, image, actionType
     void Start()
     {
@@ -18,6 +21,7 @@ public class ObjectController : MonoBehaviour
         durability = 100;
         transform.localScale = new Vector2(2f, 2f);
         tag = item.type.ToString();
+        worldTime = GameObject.FindGameObjectWithTag("GameController").GetComponent<WorldTime>();
     }
     
     void Update()

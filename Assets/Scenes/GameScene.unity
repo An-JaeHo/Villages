@@ -3259,6 +3259,7 @@ MonoBehaviour:
   durability: 0
   item: {fileID: 11400000, guid: 43a8b8c000157164fa28f32d5f1a6a40, type: 2}
   LootPrefeb: {fileID: 0}
+  worldTime: {fileID: 0}
 --- !u!1001 &602496102
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -13365,7 +13366,7 @@ GameObject:
   - component: {fileID: 935327559}
   m_Layer: 0
   m_Name: GameController
-  m_TagString: Untagged
+  m_TagString: GameController
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -13393,6 +13394,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 5eb89e9091a541848a071f27ee1dbc1f, type: 2}
   dayImge: {fileID: 99643794}
   dayLength: 15
+  season: 0
 --- !u!4 &935327560
 Transform:
   m_ObjectHideFlags: 0
@@ -16624,6 +16626,7 @@ MonoBehaviour:
   durability: 0
   item: {fileID: 11400000, guid: c12321f814878924eb9c563c2f53e249, type: 2}
   LootPrefeb: {fileID: 0}
+  worldTime: {fileID: 0}
 --- !u!61 &1905642104
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -17598,6 +17601,7 @@ MonoBehaviour:
   durability: 0
   item: {fileID: 11400000, guid: b4bad0e016f962e4194e540482bc984c, type: 2}
   LootPrefeb: {fileID: 0}
+  worldTime: {fileID: 0}
 --- !u!61 &2093606078
 BoxCollider2D:
   m_ObjectHideFlags: 0

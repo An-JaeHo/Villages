@@ -30,7 +30,7 @@ public class PlayerController : MonoBehaviour
         rigid = GetComponent<Rigidbody2D>();
         ani = GetComponent<Animator>();
         speed = 2;
-        layerMask = LayerMask.GetMask("Tree");
+        layerMask = LayerMask.GetMask("Collision");
     }
 
     void Update()
@@ -76,8 +76,8 @@ public class PlayerController : MonoBehaviour
             ani.SetBool("IsWalking", false);
         }
 
-        hit = Physics2D.Raycast(transform.position, direction, 0.5f, layerMask);
-        Debug.DrawRay(transform.position, direction * 0.5f, Color.red);
+        hit = Physics2D.Raycast(transform.position, direction, 0.3f, layerMask);
+        Debug.DrawRay(transform.position, direction * 0.3f, Color.red);
         
         if (hit)
         {

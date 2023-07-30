@@ -6,7 +6,6 @@ using UnityEngine.UI;
 
 public class test : MonoBehaviour
 {
-
     public Tilemap map;
     public TileBase tile;
 

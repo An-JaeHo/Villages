@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Burst.CompilerServices;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Tilemaps;
@@ -81,6 +82,7 @@ public class PlayerController : MonoBehaviour
         
         if (hit)
         {
+            Debug.Log(hit.transform.position);
             hitObj = hit.transform;
         }
     }

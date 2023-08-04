@@ -22,6 +22,7 @@ public class PlayerController : MonoBehaviour
 
     [Header("LootPrfebs")]
     public GameObject lootPrefeb;
+    public Vector2 testPos;
 
     void Awake()
     {
@@ -71,6 +72,24 @@ public class PlayerController : MonoBehaviour
         {
             ani.SetFloat("X", moveHorizontal);
             ani.SetFloat("Y", moveVertical);
+
+            if (moveVertical > 0)
+            {
+                testPos = new Vector2Int((int)(transform.position.x), (int)(transform.position.y + 1));
+            }
+            else if (moveVertical < 0)
+            {
+                testPos = new Vector2Int((int)(transform.position.x), (int)(transform.position.y - 1));
+            }
+
+            if (moveHorizontal > 0)
+            {
+                testPos = new Vector2Int((int)(transform.position.x + 1), (int)(transform.position.y));
+            }
+            else if (moveHorizontal < 0)
+            {
+                testPos = new Vector2Int((int)(transform.position.x - 1), (int)(transform.position.y));
+            }
         }
         else
         {
@@ -82,7 +101,6 @@ public class PlayerController : MonoBehaviour
         
         if (hit)
         {
-            Debug.Log(hit.transform.position);
             hitObj = hit.transform;
         }
     }

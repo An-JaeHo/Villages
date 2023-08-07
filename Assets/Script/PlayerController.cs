@@ -12,8 +12,11 @@ public class PlayerController : MonoBehaviour
     public Animator ani;
     public bool usingTool;
     public Image staminaBar;
+    public Item item;
     private int speed;
-
+    private float moveHorizontal ;
+    private float moveVertical ;
+    private Vector2 direction ;
     [SerializeField] private float stamina;
     [SerializeField] private float maxStamina;
     [SerializeField] private RaycastHit2D hit;
@@ -22,7 +25,11 @@ public class PlayerController : MonoBehaviour
 
     [Header("LootPrfebs")]
     public GameObject lootPrefeb;
-    public Vector2 testPos;
+
+    [Header("FarmTile")]
+    public Tilemap farmMap;
+    public TileBase checkTile;
+    public Vector3Int testPos;
 
     void Awake()
     {
@@ -39,6 +46,10 @@ public class PlayerController : MonoBehaviour
     {
         staminaBar.fillAmount = stamina/ maxStamina;
 
+        moveHorizontal = Input.GetAxis("Horizontal");
+        moveVertical = Input.GetAxis("Vertical");
+        direction = new Vector2(moveHorizontal * speed, moveVertical * speed);
+
         if (Input.GetKeyDown(KeyCode.Space)&& usingTool)
         {
             Action();
@@ -48,15 +59,16 @@ public class PlayerController : MonoBehaviour
         {
             Move();
         }
+
+        if (usingTool && item.actionType == ActionType.Farming)
+        {
+            CheckHoeTile();
+        }
     }
 
     //Player Movment and direction
     private void Move()
     {
-        float moveHorizontal = Input.GetAxis("Horizontal");
-        float moveVertical = Input.GetAxis("Vertical");
-        Vector2 direction = new Vector2(moveHorizontal * speed, moveVertical * speed);
-
         if (Input.GetKey(KeyCode.LeftControl))
         {
             ani.SetBool("IsWalking", false);
@@ -72,24 +84,7 @@ public class PlayerController : MonoBehaviour
         {
             ani.SetFloat("X", moveHorizontal);
             ani.SetFloat("Y", moveVertical);
-
-            if (moveVertical > 0)
-            {
-                testPos = new Vector2Int((int)(transform.position.x), (int)(transform.position.y + 1));
-            }
-            else if (moveVertical < 0)
-            {
-                testPos = new Vector2Int((int)(transform.position.x), (int)(transform.position.y - 1));
-            }
-
-            if (moveHorizontal > 0)
-            {
-                testPos = new Vector2Int((int)(transform.position.x + 1), (int)(transform.position.y));
-            }
-            else if (moveHorizontal < 0)
-            {
-                testPos = new Vector2Int((int)(transform.position.x - 1), (int)(transform.position.y));
-            }
+            //CheckHoeTile();
         }
         else
         {
@@ -105,12 +100,70 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    private void CheckHoeTile()
+    {
+        farmMap.SetTile(testPos, null);
+        
+        if (moveHorizontal == 0)
+        {
+            if (moveVertical > 0)
+            {
+                testPos = new Vector3Int((int)(transform.position.x), (int)(transform.position.y + 1), 0);
+            }
+            else if (moveVertical < 0)
+            {
+                testPos = new Vector3Int((int)(transform.position.x), (int)(transform.position.y - 1), 0);
+
+                if (transform.position.y > -1 && transform.position.y < 1)
+                {
+                    testPos = new Vector3Int((int)(testPos.x), (int)(testPos.y - 1f), 0);
+                }
+            }
+
+            if (transform.position.y < -1)
+            {
+                testPos = new Vector3Int((int)(testPos.x), (int)(testPos.y - 1f), 0);
+            }
+
+            if (transform.position.x < 0)
+            {
+                testPos = new Vector3Int((int)(testPos.x - 1f), (int)(testPos.y), 0);
+            }
+        }
+
+        if (moveVertical == 0)
+        {
+            if (moveHorizontal > 0)
+            {
+                testPos = new Vector3Int((int)(transform.position.x + 1f), (int)(transform.position.y), 0);
+            }
+            else if (moveHorizontal < 0)
+            {
+                testPos = new Vector3Int((int)(transform.position.x - 1f), (int)(transform.position.y), 0);
+
+                if (transform.position.x > -1 && transform.position.x < 1)
+                {
+                    testPos = new Vector3Int((int)(testPos.x - 1f), (int)(testPos.y), 0);
+                }
+            }
+
+            if (transform.position.x < -1)
+            {
+                testPos = new Vector3Int((int)(testPos.x - 1f), (int)(testPos.y), 0);
+            }
+        }
+
+        farmMap.SetTile(testPos, checkTile);
+        farmMap.RefreshAllTiles();
+    }
+
     //Player Action
     private void Action()
     {
         if(!ani.GetBool("IsWalking"))
         {
             ani.SetTrigger("UsingTool");
+            
         }
 
         if(hitObj != null)

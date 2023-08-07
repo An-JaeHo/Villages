@@ -25,7 +25,7 @@ public class WorldTime : MonoBehaviour
         StartCoroutine(AddMinute());
 
         //세이브 데이터 저장
-        saveDay = new TimeSpan(2,10,20,0);
+        saveDay = new TimeSpan(2,8,20,0);
         currentTime = saveDay;
         season = 1;
         seasonChangeCheck = false;

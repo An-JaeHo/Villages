@@ -3152,7 +3152,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!61 &600006722
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -13401,7 +13401,7 @@ MonoBehaviour:
   dayImge: {fileID: 99643794}
   season: 0
   seasonChangeCheck: 0
-  dayLength: 15
+  dayLength: 1000
 --- !u!4 &935327560
 Transform:
   m_ObjectHideFlags: 0
@@ -13431,7 +13431,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   map: {fileID: 916473249}
   tile: {fileID: 11400000, guid: 3aa247ea4f1d65b498eeec5d9b28b375, type: 2}
-  allTiles: []
 --- !u!114 &937209178 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2871166546745417166, guid: 54c21f043a6dcd045bafa7d317e18311, type: 3}
@@ -15048,7 +15047,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1247251195}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -6.5, y: 0.5, z: 0}
+  m_LocalPosition: {x: -6, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -15113,6 +15112,7 @@ MonoBehaviour:
   ani: {fileID: 0}
   usingTool: 0
   staminaBar: {fileID: 1070898323}
+  item: {fileID: 0}
   stamina: 0
   maxStamina: 0
   layerMask:
@@ -15120,7 +15120,9 @@ MonoBehaviour:
     m_Bits: 0
   hitObj: {fileID: 0}
   lootPrefeb: {fileID: 8653641032718866377, guid: e9927ee95df1ced438e271a3a5139e2d, type: 3}
-  testPos: {x: 0, y: 0}
+  farmMap: {fileID: 1277816416}
+  checkTile: {fileID: 11400000, guid: 3b0ef38b17539064290614f219ec50c1, type: 2}
+  testPos: {x: 0, y: 0, z: 0}
 --- !u!1001 &1257167587
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -15345,22 +15347,22 @@ Tilemap:
   m_TileMatrixArray:
   - m_RefCount: 0
     m_Data:
-      e00: -518113280
+      e00: 1.8720287e+27
       e01: 0
-      e02: -2.1006438e-19
-      e03: -2.1006438e-19
-      e10: 7.44e-43
+      e02: -3.8750038
+      e03: -3.8750038
+      e10: 5.04e-43
       e11: 0
-      e12: 7.44e-43
-      e13: 7.44e-43
-      e20: 1.8231206e+28
+      e12: 4.99e-43
+      e13: 4.99e-43
+      e20: 5.005291e-24
       e21: 1e-45
-      e22: 2.3811986e-19
-      e23: -6.54216e-40
-      e30: 4.5904e-41
+      e22: 2.9506872e-18
+      e23: -5.17696e-40
+      e30: 4.5905e-41
       e31: 0
-      e32: 7.45e-43
-      e33: 7.48e-43
+      e32: 5e-43
+      e33: 5.03e-43
   m_TileColorArray:
   - m_RefCount: 0
     m_Data: {r: 4.5419e-41, g: 4.5419e-41, b: 4.5419e-41, a: 4.5419e-41}
@@ -16788,7 +16790,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1905642103
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17764,7 +17766,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &2093606077
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18162,10 +18164,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inventoryManger: {fileID: 211620233}
   itemToPickup:
-  - {fileID: 11400000, guid: b4bad0e016f962e4194e540482bc984c, type: 2}
+  - {fileID: 11400000, guid: fc4f11cbeea6a9b41bb7d4f82f58dfdf, type: 2}
+  - {fileID: 11400000, guid: c12321f814878924eb9c563c2f53e249, type: 2}
   - {fileID: 11400000, guid: 3c799e1cdb2422f449ce6fce87aa9743, type: 2}
   - {fileID: 11400000, guid: f2d99b14ce231504dbc1a08dcddd9f4a, type: 2}
-  - {fileID: 11400000, guid: c12321f814878924eb9c563c2f53e249, type: 2}
   - {fileID: 11400000, guid: 43a8b8c000157164fa28f32d5f1a6a40, type: 2}
 --- !u!1001 &310442287900130617
 PrefabInstance:

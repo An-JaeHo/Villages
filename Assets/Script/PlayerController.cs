@@ -104,32 +104,32 @@ public class PlayerController : MonoBehaviour
     {
         farmMap.SetTile(testPos, null);
         
-        if (moveHorizontal == 0)
-        {
-            if (moveVertical > 0)
-            {
-                testPos = new Vector3Int((int)(transform.position.x), (int)(transform.position.y + 1), 0);
-            }
-            else if (moveVertical < 0)
-            {
-                testPos = new Vector3Int((int)(transform.position.x), (int)(transform.position.y - 1), 0);
+        //if (moveHorizontal == 0)
+        //{
+        //    if (moveVertical > 0)
+        //    {
+        //        testPos = new Vector3Int((int)(transform.position.x), (int)(transform.position.y + 1), 0);
+        //    }
+        //    else if (moveVertical < 0)
+        //    {
+        //        testPos = new Vector3Int((int)(transform.position.x), (int)(transform.position.y - 1), 0);
 
-                if (transform.position.y > -1 && transform.position.y < 1)
-                {
-                    testPos = new Vector3Int((int)(testPos.x), (int)(testPos.y - 1f), 0);
-                }
-            }
+        //        if (transform.position.y > -1 && transform.position.y < 1)
+        //        {
+        //            testPos = new Vector3Int((int)(testPos.x), (int)(testPos.y - 1f), 0);
+        //        }
+        //    }
 
-            if (transform.position.y < -1)
-            {
-                testPos = new Vector3Int((int)(testPos.x), (int)(testPos.y - 1f), 0);
-            }
+        //    if (transform.position.y < -1)
+        //    {
+        //        testPos = new Vector3Int((int)(testPos.x), (int)(testPos.y - 1f), 0);
+        //    }
 
-            if (transform.position.x < 0)
-            {
-                testPos = new Vector3Int((int)(testPos.x - 1f), (int)(testPos.y), 0);
-            }
-        }
+        //    if (transform.position.x < 0)
+        //    {
+        //        testPos = new Vector3Int((int)(testPos.x - 1f), (int)(testPos.y), 0);
+        //    }
+        //}
 
         if (moveVertical == 0)
         {
@@ -141,18 +141,21 @@ public class PlayerController : MonoBehaviour
             {
                 testPos = new Vector3Int((int)(transform.position.x - 1f), (int)(transform.position.y), 0);
 
+                
                 if (transform.position.x > -1 && transform.position.x < 1)
                 {
-                    testPos = new Vector3Int((int)(testPos.x - 1f), (int)(testPos.y), 0);
+                    testPos = new Vector3Int((int)(transform.position.x - 1f), (int)(transform.position.y), 0);
                 }
             }
 
             if (transform.position.x < -1)
             {
-                testPos = new Vector3Int((int)(testPos.x - 1f), (int)(testPos.y), 0);
+                testPos = new Vector3Int((int)(transform.position.x - 1f), (int)(transform.position.y), 0);
+                Debug.Log("testPos : " + testPos);
             }
         }
 
+        
         farmMap.SetTile(testPos, checkTile);
         farmMap.RefreshAllTiles();
     }

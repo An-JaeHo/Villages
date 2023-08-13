@@ -21,6 +21,7 @@ public class InventorySlot : MonoBehaviour, IDropHandler
     public void Selet()
     {
         image.color = seletedColor;
+        player.GetComponent<PlayerController>().farmMap.SetTile(player.GetComponent<PlayerController>().testPos, null);
 
         if (transform.childCount != 0)
         {

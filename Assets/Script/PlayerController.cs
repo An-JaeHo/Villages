@@ -61,7 +61,7 @@ public class PlayerController : MonoBehaviour
             
         }
 
-        if (usingTool && item.actionType == ActionType.Farming && Input.anyKeyDown)
+        if (usingTool && item.actionType == ActionType.Farming && Input.anyKey)
         {
             CheckHoeTile();
         }

@@ -141,15 +141,16 @@ public class PlayerController : MonoBehaviour
         {
             if (moveHorizontal > 0)
             {
-                testPos = new Vector3Int((int)(transform.position.x + 1f), (int)(transform.position.y), 0);
+                testPos = new Vector3Int((int)(transform.position.x ), (int)(transform.position.y), 0);
+
+                if (transform.position.x > 0)
+                {
+                    testPos = new Vector3Int((int)(transform.position.x + 1), (int)(transform.position.y), 0);
+                }
 
                 if (transform.position.y < 0)
                 {
-                    testPos = new Vector3Int((int)(testPos.x), (int)(testPos.y - 1), 0);
-                }
-                else if (transform.position.x < -1)
-                {
-                    testPos = new Vector3Int((int)(transform.position.x), (int)(transform.position.y), 0);
+                    testPos = new Vector3Int((int)(testPos.x), (int)(transform.position.y - 1), 0);
                 }
             }
             else if (moveHorizontal < 0)
@@ -172,8 +173,15 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        farmMap.SetTile(testPos, checkTile);
-        farmMap.RefreshAllTiles();
+        if(moveVertical != 0 && moveHorizontal!=0)
+        {
+            farmMap.SetTile(testPos, null);
+        }
+        else
+        {
+            farmMap.SetTile(testPos, checkTile);
+            farmMap.RefreshAllTiles();
+        }
     }
 
     //Player Action

@@ -8,27 +8,34 @@ using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
-    public Rigidbody2D rigid;
-    public Animator ani;
-    public bool usingTool;
-    public Image staminaBar;
-    public Item item;
     private int speed;
     private float moveHorizontal ;
     private float moveVertical ;
     private Vector2 direction ;
+
+    [Header("SerializeField")]
     [SerializeField] private float stamina;
     [SerializeField] private float maxStamina;
     [SerializeField] private RaycastHit2D hit;
     [SerializeField] private LayerMask layerMask;
     [SerializeField] private Transform hitObj;
 
+    [Header("PlayerContol")]
+    public Rigidbody2D rigid;
+    public Animator ani;
+    public bool usingTool;
+    public Image staminaBar;
+    public Item item;
+
+
     [Header("LootPrfebs")]
     public GameObject lootPrefeb;
 
     [Header("FarmTile")]
+    public Tilemap sletMap;
     public Tilemap farmMap;
     public TileBase checkTile;
+    public TileBase farmTile;
     public Vector3Int testPos;
 
     void Awake()
@@ -50,6 +57,11 @@ public class PlayerController : MonoBehaviour
         moveVertical = Input.GetAxis("Vertical");
         direction = new Vector2(moveHorizontal * speed, moveVertical * speed);
 
+        if (usingTool && item.actionType == ActionType.Farming && Input.anyKey)
+        {
+            CheckHoeTile();
+        }
+
         if (Input.GetKeyDown(KeyCode.Space)&& usingTool)
         {
             Action();
@@ -59,11 +71,6 @@ public class PlayerController : MonoBehaviour
         {
             Move();
             
-        }
-
-        if (usingTool && item.actionType == ActionType.Farming && Input.anyKey)
-        {
-            CheckHoeTile();
         }
     }
 
@@ -101,9 +108,10 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    //HoeTile Check
     private void CheckHoeTile()
     {
-        farmMap.SetTile(testPos, null);
+        sletMap.SetTile(testPos, null);
         
         if (moveHorizontal == 0)
         {
@@ -175,27 +183,44 @@ public class PlayerController : MonoBehaviour
 
         if(moveVertical != 0 && moveHorizontal!=0)
         {
-            farmMap.SetTile(testPos, null);
+            sletMap.SetTile(testPos, null);
         }
         else
         {
-            farmMap.SetTile(testPos, checkTile);
-            farmMap.RefreshAllTiles();
+            sletMap.SetTile(testPos, checkTile);
+            sletMap.RefreshAllTiles();
         }
     }
 
-    //Player Action
+    //Player Action and Tool Durability
     private void Action()
     {
-        if(!ani.GetBool("IsWalking"))
+        // Player Action
+        if(!ani.GetBool("IsWalking") && item != null)
         {
-            ani.SetTrigger("UsingTool");
+            switch (item.actionType)
+            {
+                case ActionType.Using:
+                    ani.SetTrigger("UsingAxe");
+                    break;
+                case ActionType.Gather:
+                    break;
+                case ActionType.Farming:
+                    ani.SetTrigger("UsingHoe");
+                    farmMap.SetTile(testPos, farmTile);
+                    sletMap.SetTile(testPos, null);
+                    break;
+                default:
+                    break;
+            }
+
             
         }
 
-        if(hitObj != null)
-        {
-            hitObj.GetComponent<ObjectController>().durability -= 50;
-        }
+        // Player Tool Durability
+        //if(hitObj != null)
+        //{
+        //    hitObj.GetComponent<ObjectController>().durability -= 50;
+        //}
     }
 }

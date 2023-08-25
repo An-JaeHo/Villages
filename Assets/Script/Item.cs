@@ -24,7 +24,8 @@ public enum ItemType
     Tool,
     Fruit,
     Tree,
-    Build
+    Build,
+    Seed
 }
 
 public enum ActionType

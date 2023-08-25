@@ -202,14 +202,27 @@ public class PlayerController : MonoBehaviour
             {
                 case ActionType.Using:
                     ani.SetTrigger("UsingAxe");
+                    if (hitObj != null && hitObj.tag == "Tree")
+                    {
+                        hitObj.GetComponent<ObjectController>().durability -= 50;
+                    }
                     break;
+
                 case ActionType.Gather:
+
+                    if(item.type == ItemType.Seed)
+                    {
+
+                    }
+
                     break;
+
                 case ActionType.Farming:
                     ani.SetTrigger("UsingHoe");
                     farmMap.SetTile(testPos, farmTile);
                     sletMap.SetTile(testPos, null);
                     break;
+
                 default:
                     break;
             }
@@ -217,10 +230,7 @@ public class PlayerController : MonoBehaviour
             
         }
 
-        // Player Tool Durability
-        //if(hitObj != null)
-        //{
-        //    hitObj.GetComponent<ObjectController>().durability -= 50;
-        //}
+        
+        
     }
 }

@@ -34,6 +34,7 @@ public class PlayerController : MonoBehaviour
     [Header("FarmTile")]
     public Tilemap sletMap;
     public Tilemap farmMap;
+    public Tilemap fruitMap;
     public TileBase checkTile;
     public TileBase farmTile;
     public Vector3Int testPos;

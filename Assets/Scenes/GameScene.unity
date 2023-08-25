@@ -15364,6 +15364,7 @@ MonoBehaviour:
   lootPrefeb: {fileID: 8653641032718866377, guid: e9927ee95df1ced438e271a3a5139e2d, type: 3}
   sletMap: {fileID: 99093947}
   farmMap: {fileID: 1277816416}
+  fruitMap: {fileID: 829227908}
   checkTile: {fileID: 11400000, guid: 3b0ef38b17539064290614f219ec50c1, type: 2}
   farmTile: {fileID: 11400000, guid: b7e6892f9f5a7684b9a51cece5061734, type: 2}
   testPos: {x: 0, y: 0, z: 0}

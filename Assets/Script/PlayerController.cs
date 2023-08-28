@@ -5,6 +5,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using UnityEngine.UI;
+using UnityEngine.WSA;
 
 public class PlayerController : MonoBehaviour
 {
@@ -19,6 +20,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private RaycastHit2D hit;
     [SerializeField] private LayerMask layerMask;
     [SerializeField] private Transform hitObj;
+    public AnimatedTile testAniTileDate;
 
     [Header("PlayerContol")]
     public Rigidbody2D rigid;
@@ -48,6 +50,7 @@ public class PlayerController : MonoBehaviour
         ani = GetComponent<Animator>();
         speed = 2;
         layerMask = LayerMask.GetMask("Collision");
+        Debug.Log(testAniTileDate.m_AnimatedSprites);
     }
 
     void Update()
@@ -211,9 +214,9 @@ public class PlayerController : MonoBehaviour
 
                 case ActionType.Gather:
 
-                    if(item.type == ItemType.Seed)
+                    if(item.type == ItemType.Seed && farmMap.GetTile(testPos)!= null)
                     {
-
+                        fruitMap.SetTile(testPos, item.tile);
                     }
 
                     break;

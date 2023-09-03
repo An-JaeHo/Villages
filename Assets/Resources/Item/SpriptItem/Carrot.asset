@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f2daee456ee347b41b2ee4c4fa3fcd25, type: 3}
   m_Name: Carrot
   m_EditorClassIdentifier: 
-  tile: {fileID: 0}
-  type: 0
-  actionType: 0
+  tile: {fileID: 11400000, guid: 4125c6d479fc892448f5bb5af101c593, type: 2}
+  type: 4
+  actionType: 3
   range: {x: 5, y: 4}
   stackable: 1
-  image: {fileID: 0}
+  image: {fileID: 21300000, guid: d167843c7ec4dbd47ba05c4c9fd31150, type: 2}

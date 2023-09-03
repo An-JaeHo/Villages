@@ -32,5 +32,6 @@ public enum ActionType
 {
     Using,
     Gather,
-    Farming
+    Farming,
+    Plant
 }

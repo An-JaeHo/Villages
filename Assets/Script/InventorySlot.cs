@@ -39,6 +39,7 @@ public class InventorySlot : MonoBehaviour, IDropHandler
         else
         {
             player.GetComponent<PlayerController>().usingTool = false;
+            player.GetComponent<PlayerController>().item = null;
         }
     }
 

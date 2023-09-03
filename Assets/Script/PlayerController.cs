@@ -61,20 +61,27 @@ public class PlayerController : MonoBehaviour
         moveVertical = Input.GetAxis("Vertical");
         direction = new Vector2(moveHorizontal * speed, moveVertical * speed);
 
-        if (usingTool && item.actionType == ActionType.Farming && Input.anyKey)
+        if (item != null && Input.anyKey)
         {
-            CheckHoeTile();
+            if(item.actionType == ActionType.Farming || item.type == ItemType.Seed)
+            {
+                CheckTile();
+            }
         }
 
         if (Input.GetKeyDown(KeyCode.Space)&& usingTool)
         {
+            if(stamina > 10)
+            {
+                //Action();
+            }
+
             Action();
             stamina -= 10;
         }
         else
         {
             Move();
-            
         }
     }
 
@@ -113,7 +120,7 @@ public class PlayerController : MonoBehaviour
     }
 
     //HoeTile Check
-    private void CheckHoeTile()
+    private void CheckTile()
     {
         sletMap.SetTile(testPos, null);
         
@@ -214,17 +221,20 @@ public class PlayerController : MonoBehaviour
 
                 case ActionType.Gather:
 
-                    if(item.type == ItemType.Seed && farmMap.GetTile(testPos)!= null)
-                    {
-                        fruitMap.SetTile(testPos, item.tile);
-                    }
-
                     break;
 
                 case ActionType.Farming:
                     ani.SetTrigger("UsingHoe");
                     farmMap.SetTile(testPos, farmTile);
                     sletMap.SetTile(testPos, null);
+                    break;
+
+                case ActionType.Plant:
+
+                    if (item.type == ItemType.Seed && farmMap.GetTile(testPos) != null)
+                    {
+                        fruitMap.SetTile(testPos, item.tile);
+                    }
                     break;
 
                 default:

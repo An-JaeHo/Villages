@@ -20,7 +20,6 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private RaycastHit2D hit;
     [SerializeField] private LayerMask layerMask;
     [SerializeField] private Transform hitObj;
-    public AnimatedTile testAniTileDate;
 
     [Header("PlayerContol")]
     public Rigidbody2D rigid;

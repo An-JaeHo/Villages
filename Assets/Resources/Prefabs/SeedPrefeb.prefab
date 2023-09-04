@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 3721054735186977671}
   m_Layer: 0
   m_Name: SeedPrefeb
-  m_TagString: Untagged
+  m_TagString: Seed
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -74,7 +74,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 10
   m_Sprite: {fileID: 21300000, guid: d167843c7ec4dbd47ba05c4c9fd31150, type: 2}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -124,5 +124,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eea0839ececbdc9488b4ab809bf5a40f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemName: 
+  itemName: Carrot
+  fruitTile: {fileID: 0}
+  myPosition: {x: 0, y: 0, z: 0}
   sprites: []
+  waterPoint: 0
+  glow: 0
+  worldTime: {fileID: 0}
+  day: 0

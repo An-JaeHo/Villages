@@ -7,6 +7,7 @@ TagManager:
   - Tree
   - Fruit
   - Tool
+  - Seed
   layers:
   - Default
   - TransparentFX

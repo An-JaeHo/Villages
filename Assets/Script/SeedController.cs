@@ -3,11 +3,14 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 public class SeedController : MonoBehaviour
 {
     [Header("Item Information")]
     public string itemName;
+    public Tilemap fruitTile;
+    [SerializeField] private Vector3Int myPosition;
     [SerializeField] private Sprite[] sprites;
 
     [Header("Plnat Information")]
@@ -17,6 +20,10 @@ public class SeedController : MonoBehaviour
     [SerializeField] private WorldTime worldTime;
     [SerializeField] private int day;
     
+    private Color paleBrown = new Color32(255 , 255 , 255, 255);
+    private Color brown = new Color32(255 , 192 , 192, 255);
+    private Color darkBrown = new Color32(172, 90, 90, 255);
+
 
 
     void Start()
@@ -26,6 +33,9 @@ public class SeedController : MonoBehaviour
         LoadImage();
         day = worldTime.currentTime.Days;
         glow = 0;
+        myPosition = Vector3Int.FloorToInt(transform.position);
+        fruitTile.SetTileFlags(myPosition, TileFlags.None);
+        
     }
 
     void Update()
@@ -42,6 +52,19 @@ public class SeedController : MonoBehaviour
             }
 
             GetComponent<SpriteRenderer>().sprite = sprites[glow];
+
+            if(waterPoint > 60)
+            {
+                fruitTile.SetColor(myPosition, darkBrown);
+            }
+            else if (waterPoint > 30 && waterPoint <= 60)
+            {
+                fruitTile.SetColor(myPosition, brown);
+            }
+            else if (waterPoint <= 30)
+            {
+                fruitTile.SetColor(myPosition, paleBrown);
+            }
         }
     }
 

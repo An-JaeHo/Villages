@@ -50,7 +50,6 @@ public class PlayerController : MonoBehaviour
         ani = GetComponent<Animator>();
         speed = 2;
         layerMask = LayerMask.GetMask("Collision");
-        Debug.Log(testAniTileDate.m_AnimatedSprites);
     }
 
     void Update()

@@ -12,11 +12,10 @@ public class WorldTime : MonoBehaviour
     public Image dayImge;
     public float season;
     public bool seasonChangeCheck;
+    public TimeSpan currentTime;
 
     [SerializeField]
     private float dayLength;
-
-    private TimeSpan currentTime;
     private TimeSpan saveDay;
     private float minuteLength => dayLength/WorldTimeConstants.MinutesInDay;
 
@@ -35,8 +34,8 @@ public class WorldTime : MonoBehaviour
     {
         currentTime += TimeSpan.FromMinutes(1);
         WorldTimeChagne.Invoke(this,currentTime);
-
-        if(currentTime.Hours== 6)
+        
+        if (currentTime.Hours== 6)
         {
             dayImge.sprite = dayImgaes[0];
         }
@@ -49,6 +48,11 @@ public class WorldTime : MonoBehaviour
         {
             season++;
             seasonChangeCheck = false;
+
+            if (season > 4)
+            {
+                season = 1;
+            }
         }
 
         if(currentTime.Days % 3 != 0)
@@ -56,17 +60,7 @@ public class WorldTime : MonoBehaviour
             seasonChangeCheck = true;
         }
 
-            yield return new WaitForSeconds(minuteLength);
+        yield return new WaitForSeconds(minuteLength);
         StartCoroutine(AddMinute());
-    }
-
-    public void SesonTest()
-    {
-        season++;
-
-        if(season >4)
-        {
-            season = 1;
-        }
     }
 }

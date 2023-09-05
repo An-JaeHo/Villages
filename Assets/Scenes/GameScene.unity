@@ -15565,6 +15565,7 @@ MonoBehaviour:
   staminaBar: {fileID: 1070898323}
   item: {fileID: 0}
   lootPrefeb: {fileID: 8653641032718866377, guid: e9927ee95df1ced438e271a3a5139e2d, type: 3}
+  seedPrefeb: {fileID: 3721054735186977675, guid: 8b613e51dae347b40b520a6b67f09ed4, type: 3}
   sletMap: {fileID: 99093947}
   farmMap: {fileID: 1277816416}
   fruitMap: {fileID: 829227908}

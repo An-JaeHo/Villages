@@ -21,16 +21,16 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private LayerMask layerMask;
     [SerializeField] private Transform hitObj;
 
-    [Header("PlayerContol")]
+    [Header("PlayerInfo")]
     public Rigidbody2D rigid;
     public Animator ani;
     public bool usingTool;
     public Image staminaBar;
     public Item item;
 
-
-    [Header("LootPrfebs")]
+    [Header("Prfebs")]
     public GameObject lootPrefeb;
+    public GameObject seedPrefeb;
 
     [Header("FarmTile")]
     public Tilemap sletMap;
@@ -67,14 +67,23 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.Space)&& usingTool)
+        if (Input.GetKeyDown(KeyCode.Space))
         {
             if(stamina > 10)
             {
                 //Action();
             }
 
-            Action();
+            if (usingTool)
+            {
+                Action();
+            }
+            else if(item.type == ItemType.Seed)
+            {
+                Instantiate(seedPrefeb, testPos,Quaternion.identity);
+            }
+
+            
             stamina -= 10;
         }
         else
@@ -218,7 +227,7 @@ public class PlayerController : MonoBehaviour
                     break;
 
                 case ActionType.Gather:
-
+                    
                     break;
 
                 case ActionType.Farming:

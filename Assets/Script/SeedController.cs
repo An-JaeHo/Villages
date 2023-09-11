@@ -35,7 +35,6 @@ public class SeedController : MonoBehaviour
         glow = 0;
         myPosition = Vector3Int.FloorToInt(transform.position);
         fruitTile.SetTileFlags(myPosition, TileFlags.None);
-        
     }
 
     void Update()

@@ -59,10 +59,11 @@ public class PlayerController : MonoBehaviour
         moveVertical = Input.GetAxis("Vertical");
         direction = new Vector2(moveHorizontal * speed, moveVertical * speed);
 
-        if (item != null && Input.anyKey)
+        if (item != null && Input.anyKey && !Input.GetKeyDown(KeyCode.Space))
         {
             if(item.actionType == ActionType.Farming || item.type == ItemType.Seed)
             {
+                Debug.Log("push any key");
                 CheckTile();
             }
         }
@@ -80,7 +81,9 @@ public class PlayerController : MonoBehaviour
             }
             else if(item.type == ItemType.Seed)
             {
-                Instantiate(seedPrefeb, testPos,Quaternion.identity);
+                Vector3 seedPos = new Vector3(testPos.x , testPos.y );
+                GameObject seed = Instantiate(seedPrefeb, seedPos, Quaternion.identity);
+                seed.GetComponent<SeedController>().fruitTile = farmMap;
             }
 
             
@@ -232,7 +235,9 @@ public class PlayerController : MonoBehaviour
 
                 case ActionType.Farming:
                     ani.SetTrigger("UsingHoe");
+                    Debug.Log(testPos);
                     farmMap.SetTile(testPos, farmTile);
+                    farmMap.RefreshAllTiles() ;
                     sletMap.SetTile(testPos, null);
                     break;
 

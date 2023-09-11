@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3721054735186977673}
   - component: {fileID: 3721054735186977674}
   - component: {fileID: 3721054735186977671}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: SeedPrefeb
   m_TagString: Seed
   m_Icon: {fileID: 0}
@@ -125,7 +125,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemName: Carrot
-  fruitTile: {fileID: 0}
+  farmTile: {fileID: 0}
   myPosition: {x: 0, y: 0, z: 0}
   sprites: []
   waterPoint: 0

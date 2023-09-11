@@ -33,9 +33,9 @@ public class PlayerController : MonoBehaviour
     public GameObject seedPrefeb;
 
     [Header("FarmTile")]
+    public Tilemap baseTileMap;
     public Tilemap sletMap;
     public Tilemap farmMap;
-    public Tilemap fruitMap;
     public TileBase checkTile;
     public TileBase farmTile;
     public Vector3Int testPos;
@@ -63,7 +63,6 @@ public class PlayerController : MonoBehaviour
         {
             if(item.actionType == ActionType.Farming || item.type == ItemType.Seed)
             {
-                Debug.Log("push any key");
                 CheckTile();
             }
         }
@@ -81,9 +80,9 @@ public class PlayerController : MonoBehaviour
             }
             else if(item.type == ItemType.Seed)
             {
-                Vector3 seedPos = new Vector3(testPos.x , testPos.y );
+                Vector3 seedPos = new Vector3(testPos.x +0.5f , testPos.y +0.5f);
                 GameObject seed = Instantiate(seedPrefeb, seedPos, Quaternion.identity);
-                seed.GetComponent<SeedController>().fruitTile = farmMap;
+                seed.GetComponent<SeedController>().farmTile = farmMap;
             }
 
             
@@ -208,8 +207,19 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
-            sletMap.SetTile(testPos, checkTile);
-            sletMap.RefreshAllTiles();
+            if(item.actionType == ActionType.Farming 
+                && farmTile != baseTileMap.GetTile(testPos)
+                && farmTile != farmMap.GetTile(testPos))
+            {
+                sletMap.SetTile(testPos, checkTile);
+                sletMap.RefreshAllTiles();
+            }
+
+            if(item.type == ItemType.Seed && farmTile == farmMap.GetTile(testPos))
+            {
+                sletMap.SetTile(testPos, checkTile);
+                sletMap.RefreshAllTiles();
+            }
         }
     }
 
@@ -217,7 +227,7 @@ public class PlayerController : MonoBehaviour
     private void Action()
     {
         // Player Action
-        if(!ani.GetBool("IsWalking") && item != null)
+        if (!ani.GetBool("IsWalking") && item != null)
         {
             switch (item.actionType)
             {
@@ -230,33 +240,32 @@ public class PlayerController : MonoBehaviour
                     break;
 
                 case ActionType.Gather:
-                    
+
                     break;
 
                 case ActionType.Farming:
                     ani.SetTrigger("UsingHoe");
-                    Debug.Log(testPos);
                     farmMap.SetTile(testPos, farmTile);
-                    farmMap.RefreshAllTiles() ;
+                    farmMap.RefreshAllTiles();
                     sletMap.SetTile(testPos, null);
                     break;
 
                 case ActionType.Plant:
-
-                    if (item.type == ItemType.Seed && farmMap.GetTile(testPos) != null)
-                    {
-                        fruitMap.SetTile(testPos, item.tile);
-                    }
                     break;
 
                 default:
                     break;
             }
 
-            
+
         }
 
-        
-        
+        //if (hitObj.tag == "Seed")
+        //{
+        //    if (hitObj.GetComponent<SeedController>().glow == 5)
+        //    {
+        //        //hitObj.GetComponent<SeedController>().SpawnItem();
+        //    }
+        //}
     }
 }

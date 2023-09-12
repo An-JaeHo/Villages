@@ -212,14 +212,15 @@ public class PlayerController : MonoBehaviour
                 && farmTile != farmMap.GetTile(testPos))
             {
                 sletMap.SetTile(testPos, checkTile);
-                sletMap.RefreshAllTiles();
             }
 
-            if(item.type == ItemType.Seed && farmTile == farmMap.GetTile(testPos))
+            if(item.type == ItemType.Seed 
+                && farmTile == farmMap.GetTile(testPos))
             {
                 sletMap.SetTile(testPos, checkTile);
-                sletMap.RefreshAllTiles();
             }
+
+            sletMap.RefreshAllTiles();
         }
     }
 

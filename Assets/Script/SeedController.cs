@@ -4,12 +4,14 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using static UnityEditor.Progress;
 
 public class SeedController : MonoBehaviour
 {
     [Header("Item Information")]
     public string itemName;
     public Tilemap farmTile;
+    public Item myItemInfo;
     [SerializeField] private Vector3Int myPosition;
     [SerializeField] private Sprite[] sprites;
     [SerializeField] private WorldTime worldTime;
@@ -18,6 +20,7 @@ public class SeedController : MonoBehaviour
     [Header("Plnat Information")]
     public int waterPoint;
     public int glow;
+    public GameObject fruitPrefeb;
 
     
     private Color paleBrown = new Color32(255 , 255 , 255, 255);
@@ -52,10 +55,8 @@ public class SeedController : MonoBehaviour
 
             GetComponent<SpriteRenderer>().sprite = sprites[glow];
 
-            Debug.Log("aa");
             if (waterPoint > 60)
             {
-                Debug.Log("ss");
                 farmTile.SetColor(myPosition, darkBrown);
             }
             else if (waterPoint > 30 && waterPoint <= 60)
@@ -69,7 +70,7 @@ public class SeedController : MonoBehaviour
         }
     }
 
-    private void LoadImage()
+    void LoadImage()
     {
         object[] loadedItem = Resources.LoadAll(itemName, typeof(Sprite));
 
@@ -79,5 +80,14 @@ public class SeedController : MonoBehaviour
         {
             sprites[i] = (Sprite)loadedItem[i];
         }
+    }
+
+    public void SpawnFruit()
+    {
+        GameObject loot = Instantiate(fruitPrefeb, transform.position, Quaternion.identity);
+        loot.GetComponent<Loot>().Initialize(myItemInfo);
+
+
+        Destroy(gameObject);
     }
 }

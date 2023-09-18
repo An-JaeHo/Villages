@@ -128,7 +128,8 @@ MonoBehaviour:
   farmTile: {fileID: 0}
   myPosition: {x: 0, y: 0, z: 0}
   sprites: []
-  waterPoint: 0
-  glow: 0
   worldTime: {fileID: 0}
   day: 0
+  waterPoint: 0
+  glow: 0
+  fruitPrefeb: {fileID: 8653641032718866377, guid: e9927ee95df1ced438e271a3a5139e2d, type: 3}

@@ -13,6 +13,7 @@ public class PlayerController : MonoBehaviour
     private float moveHorizontal ;
     private float moveVertical ;
     private Vector2 direction ;
+    private List<Vector3> seedVector = new List<Vector3>();
 
     [Header("SerializeField")]
     [SerializeField] private float stamina;
@@ -77,21 +78,46 @@ public class PlayerController : MonoBehaviour
             if (usingTool)
             {
                 Action();
+                stamina -= 10;
             }
-            else if(item.type == ItemType.Seed)
+            else if(item != null
+                && item.type == ItemType.Seed
+                && sletMap.GetTile(testPos))
             {
-                Vector3 seedPos = new Vector3(testPos.x +0.5f , testPos.y +0.5f);
+                Vector3 seedPos = new Vector3(testPos.x + 0.5f, testPos.y + 0.5f);
+                if(seedVector != null)
+                {
+                    foreach (var vector in seedVector)
+                    {
+                        if (vector == seedPos)
+                        {
+                            return;
+                        }
+                    }
+                }
+                
                 GameObject seed = Instantiate(seedPrefeb, seedPos, Quaternion.identity);
                 seed.GetComponent<SeedController>().farmTile = farmMap;
+                seed.GetComponent<SeedController>().myItemInfo = item;
+                stamina -= 10;
+                seedVector.Add(seedPos);
             }
 
-            
-            stamina -= 10;
+            if (hitObj != null
+            && hitObj.tag == "Seed")
+            {
+                if (hitObj.GetComponent<SeedController>().glow == 5)
+                {
+                    hitObj.GetComponent<SeedController>().SpawnFruit();
+                }
+            }
         }
         else
         {
             Move();
         }
+
+        
     }
 
     //Player Movment and direction
@@ -112,7 +138,6 @@ public class PlayerController : MonoBehaviour
         {
             ani.SetFloat("X", moveHorizontal);
             ani.SetFloat("Y", moveVertical);
-            //CheckHoeTile();
         }
         else
         {
@@ -132,7 +157,7 @@ public class PlayerController : MonoBehaviour
     private void CheckTile()
     {
         sletMap.SetTile(testPos, null);
-        
+
         if (moveHorizontal == 0)
         {
             if (moveVertical > 0)
@@ -169,7 +194,7 @@ public class PlayerController : MonoBehaviour
         {
             if (moveHorizontal > 0)
             {
-                testPos = new Vector3Int((int)(transform.position.x ), (int)(transform.position.y), 0);
+                testPos = new Vector3Int((int)(transform.position.x), (int)(transform.position.y), 0);
 
                 if (transform.position.x > 0)
                 {
@@ -201,27 +226,25 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        if(moveVertical != 0 && moveHorizontal!=0)
+
+        if (item.actionType == ActionType.Farming
+            && farmTile != baseTileMap.GetTile(testPos)
+            && farmTile != farmMap.GetTile(testPos))
         {
-            sletMap.SetTile(testPos, null);
+            sletMap.SetTile(testPos, checkTile);
+        }
+        else if (item.type == ItemType.Seed
+            && farmTile == farmMap.GetTile(testPos))
+        {
+            sletMap.SetTile(testPos, checkTile);
         }
         else
         {
-            if(item.actionType == ActionType.Farming 
-                && farmTile != baseTileMap.GetTile(testPos)
-                && farmTile != farmMap.GetTile(testPos))
-            {
-                sletMap.SetTile(testPos, checkTile);
-            }
-
-            if(item.type == ItemType.Seed 
-                && farmTile == farmMap.GetTile(testPos))
-            {
-                sletMap.SetTile(testPos, checkTile);
-            }
-
-            sletMap.RefreshAllTiles();
+            sletMap.SetTile(testPos, null);
         }
+
+        sletMap.RefreshAllTiles();
+
     }
 
     //Player Action and Tool Durability
@@ -248,7 +271,7 @@ public class PlayerController : MonoBehaviour
                     ani.SetTrigger("UsingHoe");
                     farmMap.SetTile(testPos, farmTile);
                     farmMap.RefreshAllTiles();
-                    sletMap.SetTile(testPos, null);
+                    //sletMap.SetTile(testPos, null);
                     break;
 
                 case ActionType.Plant:
@@ -261,12 +284,6 @@ public class PlayerController : MonoBehaviour
 
         }
 
-        //if (hitObj.tag == "Seed")
-        //{
-        //    if (hitObj.GetComponent<SeedController>().glow == 5)
-        //    {
-        //        //hitObj.GetComponent<SeedController>().SpawnItem();
-        //    }
-        //}
+        
     }
 }

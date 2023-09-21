@@ -14,6 +14,7 @@ public class PlayerController : MonoBehaviour
     private float moveVertical ;
     private Vector2 direction ;
     private List<Vector3> seedVector = new List<Vector3>();
+    private bool checkAni;
 
     [Header("SerializeField")]
     [SerializeField] private float stamina;
@@ -44,11 +45,12 @@ public class PlayerController : MonoBehaviour
     void Awake()
     {
         usingTool = false;
+        checkAni = false;
         stamina = 100;
         maxStamina = 100;
         rigid = GetComponent<Rigidbody2D>();
         ani = GetComponent<Animator>();
-        speed = 2;
+        speed = 1;
         layerMask = LayerMask.GetMask("Collision");
     }
 
@@ -70,15 +72,9 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            if(stamina > 10)
-            {
-                //Action();
-            }
-
-            if (usingTool)
+            if (usingTool && stamina > 10)
             {
                 Action();
-                stamina -= 10;
             }
             else if(item != null
                 && item.type == ItemType.Seed
@@ -114,7 +110,10 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
-            Move();
+            if(!checkAni)
+            {
+                Move();
+            }
         }
 
         
@@ -253,6 +252,9 @@ public class PlayerController : MonoBehaviour
         // Player Action
         if (!ani.GetBool("IsWalking") && item != null)
         {
+            checkAni = true;
+            stamina -= 10;
+
             switch (item.actionType)
             {
                 case ActionType.Using:
@@ -280,10 +282,11 @@ public class PlayerController : MonoBehaviour
                 default:
                     break;
             }
-
-
         }
+    }
 
-        
+    public void CallBackAni()
+    {
+        checkAni = false;
     }
 }

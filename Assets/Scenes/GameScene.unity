@@ -283,7 +283,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Change Season
+  m_text: 'Pot Tool
 
 '
   m_isRightToLeft: 0
@@ -3022,7 +3022,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 1
+  m_text: Hoe Tool
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -14358,7 +14358,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 3
+  m_text: Carrot Seed
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -15024,14 +15024,14 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 935327559}
-        m_TargetAssemblyTypeName: WorldTime, Assembly-CSharp
-        m_MethodName: SesonTest
-        m_Mode: 1
+      - m_Target: {fileID: 2131755535}
+        m_TargetAssemblyTypeName: DemoScript, Assembly-CSharp
+        m_MethodName: PickItem
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 3
+          m_IntArgument: 1
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -18314,7 +18314,7 @@ MonoBehaviour:
   inventoryManger: {fileID: 211620233}
   itemToPickup:
   - {fileID: 11400000, guid: fc4f11cbeea6a9b41bb7d4f82f58dfdf, type: 2}
-  - {fileID: 11400000, guid: c12321f814878924eb9c563c2f53e249, type: 2}
+  - {fileID: 11400000, guid: acf0d5377bba84e4596c97e6554d72be, type: 2}
   - {fileID: 11400000, guid: 20cdfa663fd845240a8dbc2688368d0f, type: 2}
   - {fileID: 11400000, guid: f2d99b14ce231504dbc1a08dcddd9f4a, type: 2}
   - {fileID: 11400000, guid: 43a8b8c000157164fa28f32d5f1a6a40, type: 2}

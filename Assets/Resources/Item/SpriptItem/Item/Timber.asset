@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f2daee456ee347b41b2ee4c4fa3fcd25, type: 3}
-  m_Name: Fruit 2
+  m_Name: Timber
   m_EditorClassIdentifier: 
   tile: {fileID: 0}
-  type: 1
+  type: 2
   actionType: 1
   range: {x: 5, y: 4}
   stackable: 1
-  image: {fileID: 2134943138, guid: 5adeebbcc9f79a0439adec69364cdee4, type: 3}
+  image: {fileID: -2043351450, guid: 5adeebbcc9f79a0439adec69364cdee4, type: 3}

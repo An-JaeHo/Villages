@@ -56,67 +56,42 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        staminaBar.fillAmount = stamina/ maxStamina;
+        staminaBar.fillAmount = stamina / maxStamina;
 
         moveHorizontal = Input.GetAxis("Horizontal");
         moveVertical = Input.GetAxis("Vertical");
         direction = new Vector2(moveHorizontal * speed, moveVertical * speed);
 
-        if (item != null && Input.anyKey && !Input.GetKeyDown(KeyCode.Space))
+        if (!checkAni)
         {
-            if(item.actionType == ActionType.Farming || item.type == ItemType.Seed)
+            if (item != null && Input.anyKey && !Input.GetKeyDown(KeyCode.Space))
             {
-                CheckTile();
-            }
-        }
-
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            if (usingTool && stamina > 10)
-            {
-                Action();
-            }
-            else if(item != null
-                && item.type == ItemType.Seed
-                && sletMap.GetTile(testPos))
-            {
-                Vector3 seedPos = new Vector3(testPos.x + 0.5f, testPos.y + 0.5f);
-                if(seedVector != null)
+                if (item.actionType == ActionType.Farming || item.type == ItemType.Seed)
                 {
-                    foreach (var vector in seedVector)
+                    CheckTile();
+                }
+            }
+
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                //&& stamina > 10
+                Action();
+
+                if (hitObj != null
+                && hitObj.tag == "Seed")
+                {
+                    if (hitObj.GetComponent<SeedController>().glow == 5)
                     {
-                        if (vector == seedPos)
-                        {
-                            return;
-                        }
+                        hitObj.GetComponent<SeedController>().SpawnFruit();
                     }
                 }
-                
-                GameObject seed = Instantiate(seedPrefeb, seedPos, Quaternion.identity);
-                seed.GetComponent<SeedController>().farmTile = farmMap;
-                seed.GetComponent<SeedController>().myItemInfo = item;
-                stamina -= 10;
-                seedVector.Add(seedPos);
             }
-
-            if (hitObj != null
-            && hitObj.tag == "Seed")
-            {
-                if (hitObj.GetComponent<SeedController>().glow == 5)
-                {
-                    hitObj.GetComponent<SeedController>().SpawnFruit();
-                }
-            }
-        }
-        else
-        {
-            if(!checkAni)
+            else
             {
                 Move();
+
             }
         }
-
-        
     }
 
     //Player Movment and direction
@@ -250,10 +225,11 @@ public class PlayerController : MonoBehaviour
     private void Action()
     {
         // Player Action
-        if (!ani.GetBool("IsWalking") && item != null)
+        if (!ani.GetBool("IsWalking")
+            && item != null
+            && usingTool)
         {
             checkAni = true;
-            stamina -= 10;
 
             switch (item.actionType)
             {
@@ -277,11 +253,48 @@ public class PlayerController : MonoBehaviour
                     break;
 
                 case ActionType.Plant:
+
+                    if(hitObj!= null
+                        && hitObj.tag =="Seed")
+                    {
+                        hitObj.GetComponent<SeedController>().waterPoint += 20;
+                        ani.SetTrigger("UsingWater");
+                    }
+                    else
+                    {
+                        return;
+                    }
+
                     break;
 
                 default:
                     break;
             }
+
+            stamina -= 10;
+        }
+        else if (item != null
+                 && item.type == ItemType.Seed
+                 && sletMap.GetTile(testPos))
+        {
+            Vector3 seedPos = new Vector3(testPos.x + 0.5f, testPos.y + 0.5f);
+
+            if (seedVector != null)
+            {
+                foreach (var vector in seedVector)
+                {
+                    if (vector == seedPos)
+                    {
+                        return;
+                    }
+                }
+            }
+
+            GameObject seed = Instantiate(seedPrefeb, seedPos, Quaternion.identity);
+            seed.GetComponent<SeedController>().farmTile = farmMap;
+            seed.GetComponent<SeedController>().myItemInfo = item;
+            stamina -= 10;
+            seedVector.Add(seedPos);
         }
     }
 

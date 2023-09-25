@@ -28,7 +28,6 @@ public class ObjectController : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
         durability = 100;
         transform.localScale = new Vector2(1f, 1f);
-        tag = item.type.ToString();
 
         LoadSprite();
     }

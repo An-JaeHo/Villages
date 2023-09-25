@@ -2,10 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.Burst.CompilerServices;
 using Unity.VisualScripting;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using UnityEngine.UI;
-using UnityEngine.WSA;
 
 public class PlayerController : MonoBehaviour
 {
@@ -14,6 +14,8 @@ public class PlayerController : MonoBehaviour
     private float moveVertical ;
     private Vector2 direction ;
     private List<Vector3> seedVector = new List<Vector3>();
+    public List<GameObject> trees;
+    public List<GameObject> seeds;
     private bool checkAni;
 
     [Header("SerializeField")]
@@ -42,6 +44,8 @@ public class PlayerController : MonoBehaviour
     public TileBase farmTile;
     public Vector3Int testPos;
 
+    GameObject temp;
+
     void Awake()
     {
         usingTool = false;
@@ -57,7 +61,6 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         staminaBar.fillAmount = stamina / maxStamina;
-
         moveHorizontal = Input.GetAxis("Horizontal");
         moveVertical = Input.GetAxis("Vertical");
         direction = new Vector2(moveHorizontal * speed, moveVertical * speed);
@@ -72,10 +75,14 @@ public class PlayerController : MonoBehaviour
                 }
             }
 
-            if (Input.GetKeyDown(KeyCode.Space))
+            if (Input.GetKeyDown(KeyCode.Space)
+                && moveHorizontal == 0 
+                && moveVertical == 0)
             {
                 //&& stamina > 10
-                Action();
+                ChackObjDistance(trees);
+
+                //Action();
 
                 if (hitObj != null
                 && hitObj.tag == "Seed")
@@ -86,10 +93,72 @@ public class PlayerController : MonoBehaviour
                     }
                 }
             }
+            else if(Input.GetKey(KeyCode.Space))
+            {
+                if(temp != null )
+                {
+                    if(Vector2.Distance(transform.position, temp.transform.position) <= 1)
+                    {
+                        ani.SetBool("IsWalking", false);
+
+                        switch (item.actionType)
+                        {
+                            case ActionType.Using:
+                                ani.SetTrigger("UsingAxe");
+                                Debug.Log("s");
+                                break;
+
+                            case ActionType.Gather:
+
+                                break;
+
+                            case ActionType.Farming:
+                                ani.SetTrigger("UsingHoe");
+                                farmMap.SetTile(testPos, farmTile);
+                                farmMap.RefreshAllTiles();
+                                //sletMap.SetTile(testPos, null);
+                                break;
+
+                            case ActionType.Plant:
+
+                                if (hitObj != null
+                                    && hitObj.tag == "Seed")
+                                {
+                                    hitObj.GetComponent<SeedController>().waterPoint += 20;
+                                    hitObj.GetComponent<SeedController>().ChageLandColor();
+                                    ani.SetTrigger("UsingWater");
+                                }
+                                else
+                                {
+                                    return;
+                                }
+
+                                break;
+
+                            default:
+                                break;
+                        }
+                    }
+                    else
+                    {
+                        transform.position = Vector3.MoveTowards(transform.position, temp.transform.position, Time.deltaTime * 1f);
+
+                        Vector3 direction = temp.transform.position - transform.position;
+                        Debug.DrawRay(transform.position, direction, Color.black);
+
+                        ani.SetBool("IsWalking", true);
+                        ani.SetFloat("X", direction.normalized.x);
+                        ani.SetFloat("Y", direction.normalized.y);
+                    }
+                }
+            }
+            else if(Input.GetKeyUp(KeyCode.Space))
+            {
+                ani.SetBool("IsWalking", false);
+            }
             else
             {
                 Move();
-
             }
         }
     }
@@ -116,14 +185,6 @@ public class PlayerController : MonoBehaviour
         else
         {
             ani.SetBool("IsWalking", false);
-        }
-
-        hit = Physics2D.Raycast(transform.position, direction, 0.3f, layerMask);
-        Debug.DrawRay(transform.position, direction * 0.3f, Color.red);
-        
-        if (hit)
-        {
-            hitObj = hit.transform;
         }
     }
 
@@ -235,9 +296,10 @@ public class PlayerController : MonoBehaviour
             {
                 case ActionType.Using:
                     ani.SetTrigger("UsingAxe");
+                    
                     if (hitObj != null && hitObj.tag == "Tree")
                     {
-                        hitObj.GetComponent<ObjectController>().durability -= 50;
+                        //hitObj.GetComponent<ObjectController>().durability -= 50;
                     }
                     break;
 
@@ -258,6 +320,7 @@ public class PlayerController : MonoBehaviour
                         && hitObj.tag =="Seed")
                     {
                         hitObj.GetComponent<SeedController>().waterPoint += 20;
+                        hitObj.GetComponent<SeedController>().ChageLandColor();
                         ani.SetTrigger("UsingWater");
                     }
                     else
@@ -300,6 +363,65 @@ public class PlayerController : MonoBehaviour
 
     public void CallBackAni()
     {
+        if (temp != null && temp.tag == "Tree")
+        {
+            temp.GetComponent<ObjectController>().durability -= 50;
+        }
+
         checkAni = false;
     }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if(collision.tag =="Tree")
+        {
+            trees.Add(collision.gameObject);
+        }
+        else if(collision.tag =="Seed")
+        {
+            seeds.Add(collision.gameObject);
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.tag == "Tree")
+        {
+            trees.Remove(collision.gameObject);
+        }
+        else if (collision.tag == "Seed")
+        {
+            seeds.Remove(collision.gameObject);
+        }
+
+
+    }
+
+    private void ChackObjDistance(List<GameObject> Objs)
+    {
+        if (Objs.Count > 1)
+        {
+            temp = Objs[0];
+            for (int i = 1; i < Objs.Count; i++)
+            {
+                float firstDistance = Vector3.Distance(transform.position, temp.transform.position);
+                float secondDistance = Vector3.Distance(transform.position, Objs[i].transform.position);
+                
+                if (firstDistance > secondDistance)
+                {
+                    temp = Objs[i];
+                }
+            }
+        }
+        else if(Objs.Count ==1)
+        {
+            temp = Objs[0];
+        }
+        else
+        {
+            temp = null;
+        }
+    }
+
+    
 }

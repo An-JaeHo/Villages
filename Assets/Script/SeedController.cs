@@ -48,25 +48,29 @@ public class SeedController : MonoBehaviour
             day = worldTime.currentTime.Days;
             glow++;
 
-            if(glow >5)
+            if (glow > 5)
             {
                 glow = 5;
             }
 
             GetComponent<SpriteRenderer>().sprite = sprites[glow];
+            ChageLandColor();
+        }
+    }
 
-            if (waterPoint > 60)
-            {
-                farmTile.SetColor(myPosition, darkBrown);
-            }
-            else if (waterPoint > 30 && waterPoint <= 60)
-            {
-                farmTile.SetColor(myPosition, brown);
-            }
-            else if (waterPoint <= 30)
-            {
-                farmTile.SetColor(myPosition, paleBrown);
-            }
+    public  void ChageLandColor()
+    {
+        if (waterPoint > 60)
+        {
+            farmTile.SetColor(myPosition, darkBrown);
+        }
+        else if (waterPoint > 30 && waterPoint <= 60)
+        {
+            farmTile.SetColor(myPosition, brown);
+        }
+        else if (waterPoint <= 30)
+        {
+            farmTile.SetColor(myPosition, paleBrown);
         }
     }
 

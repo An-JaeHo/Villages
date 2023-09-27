@@ -91,7 +91,6 @@ public class SeedController : MonoBehaviour
         GameObject loot = Instantiate(fruitPrefeb, transform.position, Quaternion.identity);
         loot.GetComponent<Loot>().Initialize(myItemInfo);
 
-
         Destroy(gameObject);
     }
 }

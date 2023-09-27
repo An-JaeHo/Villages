@@ -21,9 +21,6 @@ public class PlayerController : MonoBehaviour
     [Header("SerializeField")]
     [SerializeField] private float stamina;
     [SerializeField] private float maxStamina;
-    [SerializeField] private RaycastHit2D hit;
-    [SerializeField] private LayerMask layerMask;
-    [SerializeField] private Transform hitObj;
 
     [Header("PlayerInfo")]
     public Rigidbody2D rigid;
@@ -55,7 +52,6 @@ public class PlayerController : MonoBehaviour
         rigid = GetComponent<Rigidbody2D>();
         ani = GetComponent<Animator>();
         speed = 1;
-        layerMask = LayerMask.GetMask("Collision");
     }
 
     void Update()
@@ -67,77 +63,22 @@ public class PlayerController : MonoBehaviour
 
         if (!checkAni)
         {
-            if (item != null && Input.anyKey && !Input.GetKeyDown(KeyCode.Space))
-            {
-                if (item.actionType == ActionType.Farming || item.type == ItemType.Seed)
-                {
-                    CheckTile();
-                }
-            }
-
+            //&& stamina > 10
             if (Input.GetKeyDown(KeyCode.Space)
                 && moveHorizontal == 0 
                 && moveVertical == 0)
             {
-                //&& stamina > 10
                 ChackObjDistance(trees);
-
-                //Action();
-
-                if (hitObj != null
-                && hitObj.tag == "Seed")
-                {
-                    if (hitObj.GetComponent<SeedController>().glow == 5)
-                    {
-                        hitObj.GetComponent<SeedController>().SpawnFruit();
-                    }
-                }
+                //hitObj.GetComponent<SeedController>().SpawnFruit();
             }
             else if(Input.GetKey(KeyCode.Space))
             {
                 if(temp != null )
                 {
-                    if(Vector2.Distance(transform.position, temp.transform.position) <= 1)
+                    if(Vector2.Distance(transform.position, temp.transform.position) <= 0.5f)
                     {
                         ani.SetBool("IsWalking", false);
-
-                        switch (item.actionType)
-                        {
-                            case ActionType.Using:
-                                ani.SetTrigger("UsingAxe");
-                                Debug.Log("s");
-                                break;
-
-                            case ActionType.Gather:
-
-                                break;
-
-                            case ActionType.Farming:
-                                ani.SetTrigger("UsingHoe");
-                                farmMap.SetTile(testPos, farmTile);
-                                farmMap.RefreshAllTiles();
-                                //sletMap.SetTile(testPos, null);
-                                break;
-
-                            case ActionType.Plant:
-
-                                if (hitObj != null
-                                    && hitObj.tag == "Seed")
-                                {
-                                    hitObj.GetComponent<SeedController>().waterPoint += 20;
-                                    hitObj.GetComponent<SeedController>().ChageLandColor();
-                                    ani.SetTrigger("UsingWater");
-                                }
-                                else
-                                {
-                                    return;
-                                }
-
-                                break;
-
-                            default:
-                                break;
-                        }
+                        Action();
                     }
                     else
                     {
@@ -166,6 +107,14 @@ public class PlayerController : MonoBehaviour
     //Player Movment and direction
     private void Move()
     {
+        if (item != null && Input.anyKey && !Input.GetKeyDown(KeyCode.Space))
+        {
+            if (item.actionType == ActionType.Farming || item.type == ItemType.Seed)
+            {
+                CheckTile();
+            }
+        }
+
         if (Input.GetKey(KeyCode.LeftControl))
         {
             ani.SetBool("IsWalking", false);
@@ -296,11 +245,10 @@ public class PlayerController : MonoBehaviour
             {
                 case ActionType.Using:
                     ani.SetTrigger("UsingAxe");
-                    
-                    if (hitObj != null && hitObj.tag == "Tree")
-                    {
-                        //hitObj.GetComponent<ObjectController>().durability -= 50;
-                    }
+                    //if (hitObj != null && hitObj.tag == "Tree")
+                    //{
+                    //    hitObj.GetComponent<ObjectController>().durability -= 50;
+                    //}
                     break;
 
                 case ActionType.Gather:
@@ -316,17 +264,17 @@ public class PlayerController : MonoBehaviour
 
                 case ActionType.Plant:
 
-                    if(hitObj!= null
-                        && hitObj.tag =="Seed")
-                    {
-                        hitObj.GetComponent<SeedController>().waterPoint += 20;
-                        hitObj.GetComponent<SeedController>().ChageLandColor();
-                        ani.SetTrigger("UsingWater");
-                    }
-                    else
-                    {
-                        return;
-                    }
+                    //if(hitObj!= null
+                    //    && hitObj.tag =="Seed")
+                    //{
+                    //    hitObj.GetComponent<SeedController>().waterPoint += 20;
+                    //    hitObj.GetComponent<SeedController>().ChageLandColor();
+                    //    ani.SetTrigger("UsingWater");
+                    //}
+                    //else
+                    //{
+                    //    return;
+                    //}
 
                     break;
 
@@ -393,8 +341,6 @@ public class PlayerController : MonoBehaviour
         {
             seeds.Remove(collision.gameObject);
         }
-
-
     }
 
     private void ChackObjDistance(List<GameObject> Objs)

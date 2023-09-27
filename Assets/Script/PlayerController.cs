@@ -69,27 +69,38 @@ public class PlayerController : MonoBehaviour
                 && moveVertical == 0)
             {
                 ChackObjDistance(trees);
+
+                if(item.actionType == ActionType.Farming)
+                {
+                    ani.SetTrigger("UsingHoe");
+                    farmMap.SetTile(testPos, farmTile);
+                    farmMap.RefreshAllTiles();
+                }
+
                 //hitObj.GetComponent<SeedController>().SpawnFruit();
             }
             else if(Input.GetKey(KeyCode.Space))
             {
-                if(temp != null )
+                if(temp != null && item != null)
                 {
-                    if(Vector2.Distance(transform.position, temp.transform.position) <= 0.5f)
+                    if(item.actionType != ActionType.Farming)
                     {
-                        ani.SetBool("IsWalking", false);
-                        Action();
-                    }
-                    else
-                    {
-                        transform.position = Vector3.MoveTowards(transform.position, temp.transform.position, Time.deltaTime * 1f);
+                        if (Vector2.Distance(transform.position, temp.transform.position) <= 0.5f)
+                        {
+                            ani.SetBool("IsWalking", false);
+                            Action();
+                        }
+                        else
+                        {
+                            transform.position = Vector3.MoveTowards(transform.position, temp.transform.position, Time.deltaTime * 1f);
 
-                        Vector3 direction = temp.transform.position - transform.position;
-                        Debug.DrawRay(transform.position, direction, Color.black);
+                            Vector3 direction = temp.transform.position - transform.position;
+                            Debug.DrawRay(transform.position, direction, Color.black);
 
-                        ani.SetBool("IsWalking", true);
-                        ani.SetFloat("X", direction.normalized.x);
-                        ani.SetFloat("Y", direction.normalized.y);
+                            ani.SetBool("IsWalking", true);
+                            ani.SetFloat("X", direction.normalized.x);
+                            ani.SetFloat("Y", direction.normalized.y);
+                        }
                     }
                 }
             }
@@ -236,8 +247,8 @@ public class PlayerController : MonoBehaviour
     {
         // Player Action
         if (!ani.GetBool("IsWalking")
-            && item != null
-            && usingTool)
+        && item != null
+        && usingTool)
         {
             checkAni = true;
 

@@ -30,8 +30,8 @@ public enum ItemType
 
 public enum ActionType
 {
-    Using,
-    Gather,
+    Cuting,
+    Gathering,
     Farming,
     Plant
 }

@@ -22,9 +22,9 @@ public class SeedController : MonoBehaviour
     public int glow;
     public GameObject fruitPrefeb;
 
-    
-    private Color paleBrown = new Color32(255 , 255 , 255, 255);
-    private Color brown = new Color32(255 , 192 , 192, 255);
+
+    private Color paleBrown = new Color32(255, 255, 255, 255);
+    private Color brown = new Color32(255, 192, 192, 255);
     private Color darkBrown = new Color32(172, 90, 90, 255);
 
 
@@ -34,7 +34,7 @@ public class SeedController : MonoBehaviour
         waterPoint = 100;
         worldTime = GameObject.FindGameObjectWithTag("GameController").GetComponent<WorldTime>();
         LoadImage();
-        day = worldTime.currentTime.Days-1;
+        day = worldTime.currentTime.Days - 1;
         glow = 1;
         myPosition = Vector3Int.FloorToInt(transform.position);
         farmTile.SetTileFlags(myPosition, TileFlags.None);
@@ -58,7 +58,7 @@ public class SeedController : MonoBehaviour
         }
     }
 
-    public  void ChageLandColor()
+    public void ChageLandColor()
     {
         if (waterPoint > 60)
         {

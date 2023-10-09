@@ -34,11 +34,6 @@ public class ObjectController : MonoBehaviour
     
     void Update()
     {
-        if(durability <=0)
-        {
-            SpawnItem();
-        }
-
         switch (worldTime.season)
         {
             case 1:
@@ -59,7 +54,7 @@ public class ObjectController : MonoBehaviour
 
     }
 
-    void SpawnItem()
+    public void SpawnItem()
     {
         GameObject loot = Instantiate(LootPrefeb, transform.position, Quaternion.identity);
         loot.GetComponent<Loot>().Initialize(item);

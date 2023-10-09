@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.Burst.CompilerServices;
@@ -65,30 +66,42 @@ public class PlayerController : MonoBehaviour
         {
             //&& stamina > 10
             if (Input.GetKeyDown(KeyCode.Space)
-                && moveHorizontal == 0 
-                && moveVertical == 0)
+                && moveHorizontal == 0
+                && moveVertical == 0
+                && item != null)
             {
-                ChackObjDistance(trees);
 
-                if(item.actionType == ActionType.Farming)
+                switch (item.actionType)
                 {
-                    ani.SetTrigger("UsingHoe");
-                    farmMap.SetTile(testPos, farmTile);
-                    farmMap.RefreshAllTiles();
+                    case ActionType.Cuting:
+                        CheckObjDistance(trees);
+                        break;
+                    case ActionType.Plant:
+                        CheckObjDistance(seeds);
+                        break;
+                    default:
+                        break;
                 }
+
+
+                FarmSystem();
 
                 //hitObj.GetComponent<SeedController>().SpawnFruit();
             }
-            else if(Input.GetKey(KeyCode.Space))
+            else if (Input.GetKey(KeyCode.Space))
             {
-                if(temp != null && item != null)
+                if (temp != null && item != null)
                 {
-                    if(item.actionType != ActionType.Farming)
+                    if (item.type == ItemType.Tool
+                        && item.actionType != ActionType.Farming)
                     {
-                        if (Vector2.Distance(transform.position, temp.transform.position) <= 0.5f)
+                        if (Vector2.Distance(transform.position, temp.transform.position) < 0.5f)
                         {
+                            Debug.Log("Input space");
+
+                            checkAni = true;
                             ani.SetBool("IsWalking", false);
-                            Action();
+                            ToolAction();
                         }
                         else
                         {
@@ -104,7 +117,7 @@ public class PlayerController : MonoBehaviour
                     }
                 }
             }
-            else if(Input.GetKeyUp(KeyCode.Space))
+            else if (Input.GetKeyUp(KeyCode.Space))
             {
                 ani.SetBool("IsWalking", false);
             }
@@ -243,61 +256,41 @@ public class PlayerController : MonoBehaviour
     }
 
     //Player Action and Tool Durability
-    private void Action()
+    private void ToolAction()
     {
         // Player Action
         if (!ani.GetBool("IsWalking")
         && item != null
         && usingTool)
         {
-            checkAni = true;
-
             switch (item.actionType)
             {
-                case ActionType.Using:
+                case ActionType.Cuting:
                     ani.SetTrigger("UsingAxe");
-                    //if (hitObj != null && hitObj.tag == "Tree")
-                    //{
-                    //    hitObj.GetComponent<ObjectController>().durability -= 50;
-                    //}
                     break;
-
-                case ActionType.Gather:
-
-                    break;
-
-                case ActionType.Farming:
-                    ani.SetTrigger("UsingHoe");
-                    farmMap.SetTile(testPos, farmTile);
-                    farmMap.RefreshAllTiles();
-                    //sletMap.SetTile(testPos, null);
-                    break;
-
                 case ActionType.Plant:
-
-                    //if(hitObj!= null
-                    //    && hitObj.tag =="Seed")
-                    //{
-                    //    hitObj.GetComponent<SeedController>().waterPoint += 20;
-                    //    hitObj.GetComponent<SeedController>().ChageLandColor();
-                    //    ani.SetTrigger("UsingWater");
-                    //}
-                    //else
-                    //{
-                    //    return;
-                    //}
-
+                    ani.SetTrigger("UsingWater");
                     break;
-
                 default:
                     break;
             }
+        }
+        
+    }
 
-            stamina -= 10;
+    private void FarmSystem ()
+    {
+        if (item.actionType == ActionType.Farming)
+        {
+            ani.SetTrigger("UsingHoe");
+            checkAni = true;
+            farmMap.SetTile(testPos, farmTile);
+            farmMap.RefreshAllTiles();
+            sletMap.SetTile(testPos, null);
         }
         else if (item != null
-                 && item.type == ItemType.Seed
-                 && sletMap.GetTile(testPos))
+         && item.type == ItemType.Seed
+         && sletMap.GetTile(testPos))
         {
             Vector3 seedPos = new Vector3(testPos.x + 0.5f, testPos.y + 0.5f);
 
@@ -320,13 +313,35 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    //각 도구별 오브젝트 정리시에 바꿔줄 예정
     public void CallBackAni()
     {
-        if (temp != null && temp.tag == "Tree")
+        if (temp != null
+            && checkAni)
         {
-            temp.GetComponent<ObjectController>().durability -= 50;
+            switch (temp.tag)
+            {
+                case "Tree":
+                    temp.GetComponent<ObjectController>().durability -= 50;
+
+                    if(temp.GetComponent<ObjectController>().durability <=0)
+                    {
+                        temp.GetComponent<ObjectController>().SpawnItem();
+                        temp = null;
+                    }
+                        break;
+
+                case "Seed":
+                    temp.GetComponent<SeedController>().waterPoint += 20;
+                    temp.GetComponent<SeedController>().ChageLandColor();
+                    break;
+
+                default:
+                    break;
+            }
         }
 
+        stamina -= 10;
         checkAni = false;
     }
 
@@ -354,7 +369,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void ChackObjDistance(List<GameObject> Objs)
+    private void CheckObjDistance(List<GameObject> Objs)
     {
         if (Objs.Count > 1)
         {

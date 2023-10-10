@@ -17,6 +17,7 @@ public class PlayerController : MonoBehaviour
     private List<Vector3> seedVector = new List<Vector3>();
     public List<GameObject> trees;
     public List<GameObject> seeds;
+    public List<GameObject> glowEndSeeds;
     private bool checkAni;
 
     [Header("SerializeField")]
@@ -77,7 +78,15 @@ public class PlayerController : MonoBehaviour
                         CheckObjDistance(trees);
                         break;
                     case ActionType.Plant:
-                        CheckObjDistance(seeds);
+                        if(item == null)
+                        {
+                            CheckObjDistance(glowEndSeeds);
+                        }
+                        else
+                        {
+                            CheckObjDistance(seeds);
+                        }
+                        
                         break;
                     default:
                         break;
@@ -90,30 +99,35 @@ public class PlayerController : MonoBehaviour
             }
             else if (Input.GetKey(KeyCode.Space))
             {
-                if (temp != null && item != null)
+                if (temp != null )
                 {
-                    if (item.type == ItemType.Tool
-                        && item.actionType != ActionType.Farming)
+                    if (Vector2.Distance(transform.position, temp.transform.position) < 0.5f)
                     {
-                        if (Vector2.Distance(transform.position, temp.transform.position) < 0.5f)
-                        {
-                            Debug.Log("Input space");
+                        ani.SetBool("IsWalking", false);
+                        checkAni = true;
 
-                            checkAni = true;
-                            ani.SetBool("IsWalking", false);
+                        if (item != null
+                        && item.actionType != ActionType.Farming
+                        && item.type == ItemType.Tool)
+                        {
                             ToolAction();
                         }
                         else
                         {
-                            transform.position = Vector3.MoveTowards(transform.position, temp.transform.position, Time.deltaTime * 1f);
-
-                            Vector3 direction = temp.transform.position - transform.position;
-                            Debug.DrawRay(transform.position, direction, Color.black);
-
-                            ani.SetBool("IsWalking", true);
-                            ani.SetFloat("X", direction.normalized.x);
-                            ani.SetFloat("Y", direction.normalized.y);
+                            temp.GetComponent<SeedController>().SpawnFruit();
+                            checkAni = false;
                         }
+                    }                    
+                    else
+                    {
+                        transform.position = Vector3.MoveTowards(transform.position, temp.transform.position, Time.deltaTime * 1f);
+
+                        Vector3 direction = temp.transform.position - transform.position;
+                        Debug.DrawRay(transform.position, direction, Color.black);
+
+                        ani.SetBool("IsWalking", true);
+                        ani.SetFloat("X", direction.normalized.x);
+                        ani.SetFloat("Y", direction.normalized.y);
                     }
                 }
             }
@@ -347,12 +361,16 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.tag =="Tree")
+        if (collision.tag == "Tree")
         {
             trees.Add(collision.gameObject);
         }
-        else if(collision.tag =="Seed")
+        else if (collision.tag == "Seed")
         {
+            if (collision.GetComponent<SeedController>().glow >= 5)
+            {
+                glowEndSeeds.Add(collision.gameObject);
+            }
             seeds.Add(collision.gameObject);
         }
     }
@@ -365,6 +383,10 @@ public class PlayerController : MonoBehaviour
         }
         else if (collision.tag == "Seed")
         {
+            if (collision.GetComponent<SeedController>().glow >= 5)
+            {
+                glowEndSeeds.Remove(collision.gameObject);
+            }
             seeds.Remove(collision.gameObject);
         }
     }

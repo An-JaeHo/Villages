@@ -92,10 +92,7 @@ public class PlayerController : MonoBehaviour
                         break;
                 }
 
-
                 FarmSystem();
-
-                //hitObj.GetComponent<SeedController>().SpawnFruit();
             }
             else if (Input.GetKey(KeyCode.Space))
             {

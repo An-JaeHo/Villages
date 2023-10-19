@@ -86,7 +86,6 @@ public class PlayerController : MonoBehaviour
                         {
                             CheckObjDistance(seeds);
                         }
-                        
                         break;
                     default:
                         break;

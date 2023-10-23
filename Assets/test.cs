@@ -9,6 +9,7 @@ public class test : MonoBehaviour
     public Tilemap map;
     public TileBase tile;
 
+    
     private void Start()
     {
         //FinishedBruning(new Vector3Int(0, 0, 0));

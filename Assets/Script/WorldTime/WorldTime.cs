@@ -9,6 +9,7 @@ public class WorldTime : MonoBehaviour
     public event EventHandler<TimeSpan> WorldTimeChagne;
 
     public Sprite[] dayImgaes;
+    public GameObject[] tiles;
     public Image dayImge;
     public float season;
     public bool seasonChangeCheck;
@@ -35,7 +36,7 @@ public class WorldTime : MonoBehaviour
         currentTime += TimeSpan.FromMinutes(1);
         WorldTimeChagne.Invoke(this,currentTime);
 
-        if(currentTime.Days %3 ==0 && seasonChangeCheck)
+        if (currentTime.Days % 3 == 0 && seasonChangeCheck)
         {
             season++;
             seasonChangeCheck = false;
@@ -43,6 +44,28 @@ public class WorldTime : MonoBehaviour
             if (season > 4)
             {
                 season = 1;
+            }
+
+            switch (season)
+            {
+                case 1:
+                    tiles[0].SetActive(true);
+                    tiles[1].SetActive(false);
+                    tiles[2].SetActive(false);
+                    break;
+                case 3:
+                    tiles[0].SetActive(false);
+                    tiles[1].SetActive(true);
+                    tiles[2].SetActive(false);
+                    break;
+                case 4:
+                    tiles[0].SetActive(false);
+                    tiles[1].SetActive(false);
+                    tiles[2].SetActive(true);
+                    break;
+
+                default:
+                    break;
             }
         }
 

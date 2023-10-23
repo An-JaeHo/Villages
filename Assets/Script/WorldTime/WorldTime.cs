@@ -34,15 +34,6 @@ public class WorldTime : MonoBehaviour
     {
         currentTime += TimeSpan.FromMinutes(1);
         WorldTimeChagne.Invoke(this,currentTime);
-        
-        if (currentTime.Hours== 6)
-        {
-            dayImge.sprite = dayImgaes[0];
-        }
-        else if(currentTime.Hours == 18)
-        {
-            dayImge.sprite = dayImgaes[1];
-        }
 
         if(currentTime.Days %3 ==0 && seasonChangeCheck)
         {
@@ -53,16 +44,44 @@ public class WorldTime : MonoBehaviour
             {
                 season = 1;
             }
+        }
 
+        if (currentTime.Hours == 6)
+        {
             switch (season)
             {
                 case 1:
+                    dayImge.sprite = dayImgaes[0];
                     break;
                 case 2:
+                    dayImge.sprite = dayImgaes[2];
                     break;
                 case 3:
+                    dayImge.sprite = dayImgaes[4];
                     break;
                 case 4:
+                    dayImge.sprite = dayImgaes[6];
+                    break;
+
+                default:
+                    break;
+            }
+        }
+        else if (currentTime.Hours == 18)
+        {
+            switch (season)
+            {
+                case 1:
+                    dayImge.sprite = dayImgaes[1];
+                    break;
+                case 2:
+                    dayImge.sprite = dayImgaes[3];
+                    break;
+                case 3:
+                    dayImge.sprite = dayImgaes[5];
+                    break;
+                case 4:
+                    dayImge.sprite = dayImgaes[7];
                     break;
 
                 default:
@@ -70,7 +89,8 @@ public class WorldTime : MonoBehaviour
             }
         }
 
-        if(currentTime.Days % 3 != 0)
+
+        if (currentTime.Days % 3 != 0)
         {
             seasonChangeCheck = true;
         }

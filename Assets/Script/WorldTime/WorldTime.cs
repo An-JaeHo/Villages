@@ -36,14 +36,19 @@ public class WorldTime : MonoBehaviour
         currentTime += TimeSpan.FromMinutes(1);
         WorldTimeChagne.Invoke(this,currentTime);
 
-        if (currentTime.Days % 3 == 0 && seasonChangeCheck)
-        {
-            season++;
-            seasonChangeCheck = false;
+        
 
-            if (season > 4)
+        if (currentTime.Hours == 6)
+        {
+            if (currentTime.Days % 3 == 0 && seasonChangeCheck)
             {
-                season = 1;
+                season++;
+                seasonChangeCheck = false;
+
+                if (season > 4)
+                {
+                    season = 1;
+                }
             }
 
             switch (season)
@@ -52,37 +57,21 @@ public class WorldTime : MonoBehaviour
                     tiles[0].SetActive(true);
                     tiles[1].SetActive(false);
                     tiles[2].SetActive(false);
-                    break;
-                case 3:
-                    tiles[0].SetActive(false);
-                    tiles[1].SetActive(true);
-                    tiles[2].SetActive(false);
-                    break;
-                case 4:
-                    tiles[0].SetActive(false);
-                    tiles[1].SetActive(false);
-                    tiles[2].SetActive(true);
-                    break;
-
-                default:
-                    break;
-            }
-        }
-
-        if (currentTime.Hours == 6)
-        {
-            switch (season)
-            {
-                case 1:
                     dayImge.sprite = dayImgaes[0];
                     break;
                 case 2:
                     dayImge.sprite = dayImgaes[2];
                     break;
                 case 3:
+                    tiles[0].SetActive(false);
+                    tiles[1].SetActive(true);
+                    tiles[2].SetActive(false);
                     dayImge.sprite = dayImgaes[4];
                     break;
                 case 4:
+                    tiles[0].SetActive(false);
+                    tiles[1].SetActive(false);
+                    tiles[2].SetActive(true);
                     dayImge.sprite = dayImgaes[6];
                     break;
 

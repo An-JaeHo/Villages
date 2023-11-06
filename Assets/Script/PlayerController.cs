@@ -71,14 +71,13 @@ public class PlayerController : MonoBehaviour
                 && moveVertical == 0
                 && item != null)
             {
-
                 switch (item.actionType)
                 {
                     case ActionType.Cuting:
                         CheckObjDistance(trees);
                         break;
                     case ActionType.Plant:
-                        if(item == null)
+                        if (item == null)
                         {
                             CheckObjDistance(glowEndSeeds);
                         }
@@ -88,43 +87,41 @@ public class PlayerController : MonoBehaviour
                         }
                         break;
                     default:
+                        temp = null;
                         break;
                 }
 
                 FarmSystem();
             }
-            else if (Input.GetKey(KeyCode.Space))
+            else if (Input.GetKey(KeyCode.Space) && temp != null)
             {
-                if (temp != null )
+                if (Vector2.Distance(transform.position, temp.transform.position) < 0.5f)
                 {
-                    if (Vector2.Distance(transform.position, temp.transform.position) < 0.5f)
-                    {
-                        ani.SetBool("IsWalking", false);
-                        checkAni = true;
+                    ani.SetBool("IsWalking", false);
+                    checkAni = true;
 
-                        if (item != null
-                        && item.actionType != ActionType.Farming
-                        && item.type == ItemType.Tool)
-                        {
-                            ToolAction();
-                        }
-                        else
-                        {
-                            temp.GetComponent<SeedController>().SpawnFruit();
-                            checkAni = false;
-                        }
-                    }                    
+                    if (item != null
+                    && item.actionType != ActionType.Farming
+                    && item.type == ItemType.Tool)
+                    {
+                        ToolAction();
+                    }
                     else
                     {
-                        transform.position = Vector3.MoveTowards(transform.position, temp.transform.position, Time.deltaTime * 1f);
-
-                        Vector3 direction = temp.transform.position - transform.position;
-                        Debug.DrawRay(transform.position, direction, Color.black);
-
-                        ani.SetBool("IsWalking", true);
-                        ani.SetFloat("X", direction.normalized.x);
-                        ani.SetFloat("Y", direction.normalized.y);
+                        temp.GetComponent<SeedController>().SpawnFruit();
+                        checkAni = false;
                     }
+                }
+                else
+                {
+                    transform.position = Vector3.MoveTowards(transform.position, temp.transform.position, Time.deltaTime * 1f);
+
+                    Vector3 direction = temp.transform.position - transform.position;
+                    Debug.DrawRay(transform.position, direction, Color.black);
+
+                    ani.SetBool("IsWalking", true);
+                    ani.SetFloat("X", direction.normalized.x);
+                    ani.SetFloat("Y", direction.normalized.y);
                 }
             }
             else if (Input.GetKeyUp(KeyCode.Space))

@@ -29,7 +29,7 @@ public class ObjectController : MonoBehaviour
         durability = 100;
         transform.localScale = new Vector2(1f, 1f);
 
-        LoadSprite();
+        LoadSprite("NormalTree");
     }
     
     void Update()
@@ -62,9 +62,9 @@ public class ObjectController : MonoBehaviour
         Destroy(gameObject);
     }
 
-    void LoadSprite()
+    void LoadSprite(string tag)
     {
-        object[] loadedItem = Resources.LoadAll("Land/Tree/NormalTree", typeof(Sprite));
+        object[] loadedItem = Resources.LoadAll("Land/Tree/"+ tag, typeof(Sprite));
         
         sprite = new Sprite[loadedItem.Length];
 

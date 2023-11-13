@@ -14,9 +14,9 @@ public class Item : ScriptableObject
 
     [Header("Only UI")]
     public bool stackable = true;
+    public Sprite uiImage;
 
-    [Header("Both")]
-    public Sprite image;
+    
 }
 
 public enum ItemType

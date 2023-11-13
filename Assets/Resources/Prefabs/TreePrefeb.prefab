@@ -125,7 +125,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   durability: 0
-  item: {fileID: 11400000, guid: 43a8b8c000157164fa28f32d5f1a6a40, type: 2}
+  itemInfo: {fileID: 11400000, guid: 43a8b8c000157164fa28f32d5f1a6a40, type: 2}
   LootPrefeb: {fileID: 0}
-  worldTime: {fileID: 0}
-  sprite: []
+  glowCheck: 0
+  objName: 
+  objSprites: []

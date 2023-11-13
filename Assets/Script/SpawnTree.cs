@@ -32,6 +32,7 @@ public class SpawnTree : MonoBehaviour
                 if(i == 19)
                 {
                     check = false;
+                    
                 }
             }
         }
@@ -48,7 +49,6 @@ public class SpawnTree : MonoBehaviour
             {
                 if (lastPos[j] == spawnPos)
                 {
-                    Debug.Log("ss");
                     SpawnTrees();
                     return;
                 }

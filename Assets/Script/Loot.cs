@@ -13,7 +13,7 @@ public class Loot : MonoBehaviour
     public void Initialize(Item item)
     {
         this.item = item;
-        sprite.sprite = item.image;
+        sprite.sprite = item.uiImage;
     }
 
     private void OnTriggerEnter2D(Collider2D other)

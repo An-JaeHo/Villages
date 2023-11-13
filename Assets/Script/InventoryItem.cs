@@ -16,10 +16,15 @@ public class InventoryItem : MonoBehaviour,IBeginDragHandler,IDragHandler,IEndDr
     [HideInInspector] public int count = 1;
     [HideInInspector] public Transform parentAfterDrag;
 
+    private void Start()
+    {
+        image = GetComponent<Image>();
+    }
+
     public void InitialiseItem(Item newItem)
     {
         item = newItem;
-        image.sprite = newItem.image;
+        image.sprite = newItem.uiImage;
         RefreshConunt();
     }
 

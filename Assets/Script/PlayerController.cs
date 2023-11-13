@@ -17,7 +17,7 @@ public class PlayerController : MonoBehaviour
     private List<Vector3> seedVector = new List<Vector3>();
     public List<GameObject> trees;
     public List<GameObject> seeds;
-    public List<GameObject> glowEndSeeds;
+    public List<GameObject> gateringObj;
     private bool checkAni;
 
     [Header("SerializeField")]
@@ -69,29 +69,29 @@ public class PlayerController : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.Space)
                 && moveHorizontal == 0
                 && moveVertical == 0
-                && item != null)
+                )
             {
-                switch (item.actionType)
+                if(item != null)
                 {
-                    case ActionType.Cuting:
-                        CheckObjDistance(trees);
-                        break;
-                    case ActionType.Plant:
-                        if (item == null)
-                        {
-                            CheckObjDistance(glowEndSeeds);
-                        }
-                        else
-                        {
+                    switch (item.actionType)
+                    {
+                        case ActionType.Cuting:
+                            CheckObjDistance(trees);
+                            break;
+                        case ActionType.Plant:
                             CheckObjDistance(seeds);
-                        }
-                        break;
-                    default:
-                        temp = null;
-                        break;
-                }
+                            break;
+                        default:
+                            temp = null;
+                            break;
+                    }
 
-                FarmSystem();
+                    FarmSystem();
+                }
+                else
+                {
+                    CheckObjDistance(gateringObj);
+                }
             }
             else if (Input.GetKey(KeyCode.Space) && temp != null)
             {
@@ -100,15 +100,25 @@ public class PlayerController : MonoBehaviour
                     ani.SetBool("IsWalking", false);
                     checkAni = true;
 
-                    if (item != null
-                    && item.actionType != ActionType.Farming
-                    && item.type == ItemType.Tool)
+                    if (item != null)
                     {
-                        ToolAction();
+                        if (item.actionType != ActionType.Farming
+                            && item.type == ItemType.Tool)
+                        {
+                            ToolAction();
+                        }
                     }
                     else
                     {
-                        temp.GetComponent<SeedController>().SpawnFruit();
+                        if (temp.tag == "Tree")
+                        {
+                            temp.GetComponent<ObjectController>().SpawnItem();
+                        }
+                        else
+                        {
+                            temp.GetComponent<SeedController>().SpawnFruit();
+                        }
+                        
                         checkAni = false;
                     }
                 }
@@ -356,14 +366,28 @@ public class PlayerController : MonoBehaviour
     {
         if (collision.tag == "Tree")
         {
-            trees.Add(collision.gameObject);
+            if (collision.GetComponent<ObjectController>().objName != "NormalTree")
+            {
+                if(collision.GetComponent<ObjectController>().glowCheck)
+                {
+                    gateringObj.Add(collision.gameObject);
+                }
+                
+            }
+            else
+            {
+                trees.Add(collision.gameObject);
+            }
+
+            
         }
         else if (collision.tag == "Seed")
         {
             if (collision.GetComponent<SeedController>().glow >= 5)
             {
-                glowEndSeeds.Add(collision.gameObject);
+                gateringObj.Add(collision.gameObject);
             }
+
             seeds.Add(collision.gameObject);
         }
     }
@@ -372,13 +396,24 @@ public class PlayerController : MonoBehaviour
     {
         if (collision.tag == "Tree")
         {
-            trees.Remove(collision.gameObject);
+            if(collision.GetComponent<ObjectController>().objName != "NormalTree")
+            {
+                if(collision.GetComponent<ObjectController>().glowCheck)
+                {
+                    gateringObj.Remove(collision.gameObject);
+                }
+            }
+            else
+            {
+                trees.Remove(collision.gameObject);
+            }
+            
         }
         else if (collision.tag == "Seed")
         {
             if (collision.GetComponent<SeedController>().glow >= 5)
             {
-                glowEndSeeds.Remove(collision.gameObject);
+                gateringObj.Remove(collision.gameObject);
             }
             seeds.Remove(collision.gameObject);
         }

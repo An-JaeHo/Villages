@@ -48,11 +48,13 @@ public class InventoryManger : MonoBehaviour
         for (int i = 0; i < inventorySlots.Length; i++)
         {
             InventorySlot slot = inventorySlots[i];
-            InventoryItem itemSlot = slot.GetComponentInChildren<InventoryItem>();
+            InventoryItem itemSlot = slot.GetComponentInChildren<InventoryItem>();    
+
             if (itemSlot != null &&
                 itemSlot.item == item &&
                 itemSlot.count < maxStackedItems &&
-                itemSlot.item.stackable == true)
+                itemSlot.item.stackable == true &&
+                itemSlot.item.uiImage.name == item.uiImage.name)
             {
                 itemSlot.count++;
                 itemSlot.RefreshConunt();

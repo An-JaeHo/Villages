@@ -51,7 +51,6 @@ public class InventoryManger : MonoBehaviour
             InventoryItem itemSlot = slot.GetComponentInChildren<InventoryItem>();    
 
             if (itemSlot != null &&
-                itemSlot.item == item &&
                 itemSlot.count < maxStackedItems &&
                 itemSlot.item.stackable == true &&
                 itemSlot.item.uiImage.name == item.uiImage.name)

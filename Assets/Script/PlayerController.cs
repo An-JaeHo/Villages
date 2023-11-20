@@ -115,6 +115,7 @@ public class PlayerController : MonoBehaviour
                             if(temp.GetComponent<ObjectController>().glowCheck )
                             {
                                 temp.GetComponent<ObjectController>().SpawnItem();
+                                gateringObj.Remove(temp);
                             }
                         }
                         else
@@ -347,7 +348,7 @@ public class PlayerController : MonoBehaviour
                     if(temp.GetComponent<ObjectController>().durability <=0)
                     {
                         temp.GetComponent<ObjectController>().SpawnItem();
-                        gateringObj.Remove(temp);
+                        
                         temp = null;
                     }
                         break;

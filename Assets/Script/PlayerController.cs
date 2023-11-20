@@ -112,7 +112,10 @@ public class PlayerController : MonoBehaviour
                     {
                         if (temp.tag == "Tree")
                         {
-                            temp.GetComponent<ObjectController>().SpawnItem();
+                            if(temp.GetComponent<ObjectController>().glowCheck )
+                            {
+                                temp.GetComponent<ObjectController>().SpawnItem();
+                            }
                         }
                         else
                         {
@@ -344,6 +347,7 @@ public class PlayerController : MonoBehaviour
                     if(temp.GetComponent<ObjectController>().durability <=0)
                     {
                         temp.GetComponent<ObjectController>().SpawnItem();
+                        gateringObj.Remove(temp);
                         temp = null;
                     }
                         break;
@@ -371,6 +375,7 @@ public class PlayerController : MonoBehaviour
                 if(collision.GetComponent<ObjectController>().glowCheck)
                 {
                     gateringObj.Add(collision.gameObject);
+                    
                 }
                 
             }

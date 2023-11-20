@@ -13,7 +13,7 @@ public class ObjectController : MonoBehaviour
     public GameObject LootPrefeb;
     public bool glowCheck;
     public string objName;
-
+    
     private WorldTime worldTime;
     private Sprite[] itemSprite;
     public Sprite[] objSprites;
@@ -71,11 +71,11 @@ public class ObjectController : MonoBehaviour
         {
             if (growDay + 1 <= worldTime.currentTime.Days)
             {
+                glowCheck = true;
                 spriteRenderer.sprite = itemSprite[1];
             }
             else
             {
-                glowCheck = true;
                 spriteRenderer.sprite = itemSprite[0];
             }
         }
@@ -84,20 +84,31 @@ public class ObjectController : MonoBehaviour
     public void SpawnItem()
     {
         GameObject loot = Instantiate(LootPrefeb, transform.position, Quaternion.identity);
-        
+
 
         for (int i = 0; i < objSprites.Length; i++)
         {
             if (objSprites[i].name == objName)
             {
-                
+
                 itemInfo.uiImage = objSprites[i];
             }
         }
 
         loot.GetComponent<Loot>().Initialize(itemInfo);
 
-        Destroy(gameObject);
+        if (objName != "NormalTree")
+        {
+            spriteRenderer.sprite = itemSprite[0];
+            glowCheck = false;
+            growDay = worldTime.currentTime.Days;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+
+        
     }
 
     void LoadSprite(string name)

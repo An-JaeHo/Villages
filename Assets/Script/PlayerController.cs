@@ -296,7 +296,6 @@ public class PlayerController : MonoBehaviour
                     break;
             }
         }
-        
     }
 
     private void FarmSystem ()

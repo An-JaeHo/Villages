@@ -107,6 +107,23 @@ public class PlayerController : MonoBehaviour
                         {
                             ToolAction();
                         }
+                        else
+                        {
+                            if (temp.tag == "Tree")
+                            {
+                                if (temp.GetComponent<ObjectController>().glowCheck)
+                                {
+                                    temp.GetComponent<ObjectController>().SpawnItem();
+                                    gateringObj.Remove(temp);
+                                }
+                            }
+                            else
+                            {
+                                temp.GetComponent<SeedController>().SpawnFruit();
+                            }
+
+                            checkAni = false;
+                        }
                     }
                     else
                     {
@@ -298,7 +315,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void FarmSystem ()
+    private void FarmSystem()
     {
         if (item.actionType == ActionType.Farming)
         {
@@ -309,9 +326,10 @@ public class PlayerController : MonoBehaviour
             sletMap.SetTile(testPos, null);
         }
         else if (item != null
-         && item.type == ItemType.Seed
-         && sletMap.GetTile(testPos))
+            && item.type == ItemType.Seed
+                && sletMap.GetTile(testPos))
         {
+
             Vector3 seedPos = new Vector3(testPos.x + 0.5f, testPos.y + 0.5f);
 
             if (seedVector != null)
@@ -330,6 +348,15 @@ public class PlayerController : MonoBehaviour
             seed.GetComponent<SeedController>().myItemInfo = item;
             stamina -= 10;
             seedVector.Add(seedPos);
+
+            
+        }
+        else
+        {
+            if (item.type == ItemType.Fruit || item.type == ItemType.Tree)
+            {
+                CheckObjDistance(gateringObj);
+            }
         }
     }
 

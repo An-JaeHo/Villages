@@ -40,9 +40,7 @@ public class ObjectController : MonoBehaviour
         growDay = worldTime.currentTime.Days;
         objName = treeNames[Random.Range(0, treeNames.Length)];
 
-        LoadSprite(objName);
-
-        
+        LoadItemInfo(objName);
     }
 
     void Update()
@@ -85,12 +83,10 @@ public class ObjectController : MonoBehaviour
     {
         GameObject loot = Instantiate(LootPrefeb, transform.position, Quaternion.identity);
 
-
         for (int i = 0; i < objSprites.Length; i++)
         {
             if (objSprites[i].name == objName)
             {
-
                 itemInfo.uiImage = objSprites[i];
             }
         }
@@ -111,7 +107,7 @@ public class ObjectController : MonoBehaviour
         
     }
 
-    void LoadSprite(string name)
+    void LoadItemInfo(string name)
     {
         object[] loadedItem = Resources.LoadAll("Land/Tree/" + name, typeof(Sprite));
         itemSprite = new Sprite[loadedItem.Length];
@@ -127,6 +123,17 @@ public class ObjectController : MonoBehaviour
         for (int i = 0; i < loadedObj.Length; i++)
         {
             objSprites[i] = (Sprite)loadedObj[i];
+        }
+
+        if(objName == "NormalTree")
+        {
+            itemInfo.type = ItemType.Tree;
+            itemInfo.actionType = ActionType.Gathering;
+        }
+        else
+        {
+            itemInfo.type = ItemType.Fruit;
+            itemInfo.actionType = ActionType.Gathering;
         }
 
     }

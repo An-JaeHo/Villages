@@ -329,7 +329,6 @@ public class PlayerController : MonoBehaviour
             && item.type == ItemType.Seed
                 && sletMap.GetTile(testPos))
         {
-
             Vector3 seedPos = new Vector3(testPos.x + 0.5f, testPos.y + 0.5f);
 
             if (seedVector != null)

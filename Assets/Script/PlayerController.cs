@@ -71,7 +71,8 @@ public class PlayerController : MonoBehaviour
                 && moveVertical == 0
                 )
             {
-                if(item != null)
+                temp = null;
+                if (item != null)
                 {
                     switch (item.actionType)
                     {
@@ -392,35 +393,75 @@ public class PlayerController : MonoBehaviour
         checkAni = false;
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerStay2D(Collider2D collision)
     {
         if (collision.tag == "Tree")
         {
             if (collision.GetComponent<ObjectController>().objName != "NormalTree")
             {
-                if(collision.GetComponent<ObjectController>().glowCheck)
+                if (collision.GetComponent<ObjectController>().glowCheck)
                 {
-                    gateringObj.Add(collision.gameObject);
-                    
+                    if(!gateringObj.Contains(collision.gameObject))
+                    {
+                        gateringObj.Add(collision.gameObject);
+                    }
                 }
-                
+
             }
             else
             {
-                trees.Add(collision.gameObject);
+                if (!trees.Contains(collision.gameObject))
+                {
+                    trees.Add(collision.gameObject);
+                }
             }
-
-            
         }
         else if (collision.tag == "Seed")
         {
             if (collision.GetComponent<SeedController>().glow >= 5)
             {
-                gateringObj.Add(collision.gameObject);
+                if (!gateringObj.Contains(collision.gameObject))
+                {
+                    gateringObj.Add(collision.gameObject);
+                }
             }
 
-            seeds.Add(collision.gameObject);
+            if (!seeds.Contains(collision.gameObject))
+            {
+                seeds.Add(collision.gameObject);
+            }
         }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        //if (collision.tag == "Tree")
+        //{
+        //    if (collision.GetComponent<ObjectController>().objName != "NormalTree")
+        //    {
+        //        if(collision.GetComponent<ObjectController>().glowCheck)
+        //        {
+        //            gateringObj.Add(collision.gameObject);
+                    
+        //        }
+                
+        //    }
+        //    else
+        //    {
+        //        trees.Add(collision.gameObject);
+        //    }
+
+            
+        //}
+        //else if (collision.tag == "Seed")
+        //{
+        //    if (collision.GetComponent<SeedController>().glow >= 5)
+        //    {
+        //        gateringObj.Add(collision.gameObject);
+        //    }
+
+        //    seeds.Add(collision.gameObject);
+        //}
     }
 
     private void OnTriggerExit2D(Collider2D collision)

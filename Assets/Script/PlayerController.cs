@@ -11,25 +11,27 @@ using UnityEngine.UI;
 public class PlayerController : MonoBehaviour
 {
     private int speed;
-    private float moveHorizontal ;
-    private float moveVertical ;
+    public float moveHorizontal ;
+    public float moveVertical ;
     private Vector2 direction ;
     private List<Vector3> seedVector = new List<Vector3>();
-    public List<GameObject> trees;
-    public List<GameObject> seeds;
-    public List<GameObject> gateringObj;
     private bool checkAni;
+    
+    private WorldTime worldTime;
 
     [Header("SerializeField")]
-    [SerializeField] private float stamina;
-    [SerializeField] private float maxStamina;
+    [SerializeField] private List<GameObject> trees;
+    [SerializeField] private List<GameObject> seeds;
+    [SerializeField] private List<GameObject> gateringObj;
 
     [Header("PlayerInfo")]
     public Rigidbody2D rigid;
     public Animator ani;
-    public bool usingTool;
-    public Image staminaBar;
     public Item item;
+    public bool usingTool;
+    public bool moveCheck;
+    public float stamina;
+    public float maxStamina;
 
     [Header("Prfebs")]
     public GameObject lootPrefeb;
@@ -43,17 +45,23 @@ public class PlayerController : MonoBehaviour
     public TileBase farmTile;
     public Vector3Int testPos;
 
+    [Header("Ui")]
+    public Image staminaBar;
+    public GameObject sleepUi;
+
     GameObject temp;
 
     void Awake()
     {
         usingTool = false;
         checkAni = false;
+        moveCheck = true;
         stamina = 100;
         maxStamina = 100;
         rigid = GetComponent<Rigidbody2D>();
         ani = GetComponent<Animator>();
         speed = 1;
+        worldTime = GameObject.FindGameObjectWithTag("GameController").GetComponent<WorldTime>();
     }
 
     void Update()
@@ -63,9 +71,10 @@ public class PlayerController : MonoBehaviour
         moveVertical = Input.GetAxis("Vertical");
         direction = new Vector2(moveHorizontal * speed, moveVertical * speed);
 
-        if (!checkAni)
+        // 아직 스테미너에 따라 움직이게 설정 안해놓음
+        if (!checkAni
+            && moveCheck)
         {
-            //&& stamina > 10
             if (Input.GetKeyDown(KeyCode.Space)
                 && moveHorizontal == 0
                 && moveVertical == 0
@@ -164,6 +173,10 @@ public class PlayerController : MonoBehaviour
             {
                 Move();
             }
+        }
+        else
+        {
+            
         }
     }
 
@@ -369,6 +382,7 @@ public class PlayerController : MonoBehaviour
             switch (temp.tag)
             {
                 case "Tree":
+                    //2번으로 나무 베이게 만듬
                     temp.GetComponent<ObjectController>().durability -= 50;
 
                     if(temp.GetComponent<ObjectController>().durability <=0)
@@ -431,37 +445,19 @@ public class PlayerController : MonoBehaviour
                 seeds.Add(collision.gameObject);
             }
         }
+
+        
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        //if (collision.tag == "Tree")
-        //{
-        //    if (collision.GetComponent<ObjectController>().objName != "NormalTree")
-        //    {
-        //        if(collision.GetComponent<ObjectController>().glowCheck)
-        //        {
-        //            gateringObj.Add(collision.gameObject);
-                    
-        //        }
-                
-        //    }
-        //    else
-        //    {
-        //        trees.Add(collision.gameObject);
-        //    }
-
+        if (collision.tag == "House"
             
-        //}
-        //else if (collision.tag == "Seed")
-        //{
-        //    if (collision.GetComponent<SeedController>().glow >= 5)
-        //    {
-        //        gateringObj.Add(collision.gameObject);
-        //    }
-
-        //    seeds.Add(collision.gameObject);
-        //}
+            )
+        {
+            sleepUi.SetActive(true);
+            Time.timeScale = 0f;
+        }
     }
 
     private void OnTriggerExit2D(Collider2D collision)

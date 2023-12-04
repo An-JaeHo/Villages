@@ -8,6 +8,7 @@ TagManager:
   - Fruit
   - Tool
   - Seed
+  - House
   layers:
   - Default
   - TransparentFX

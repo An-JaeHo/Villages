@@ -44,7 +44,7 @@ public class SleepUiController : MonoBehaviour
 
     public void SleepButton()
     {
-        Time.timeScale = 5f;
+        Time.timeScale = 10f;
 
         timeCheck = true;
         player.moveCheck = false;

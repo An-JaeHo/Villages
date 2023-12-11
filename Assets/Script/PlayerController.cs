@@ -16,7 +16,6 @@ public class PlayerController : MonoBehaviour
     private Vector2 direction ;
     private List<Vector3> seedVector = new List<Vector3>();
     private bool checkAni;
-    
     private WorldTime worldTime;
 
     [Header("SerializeField")]

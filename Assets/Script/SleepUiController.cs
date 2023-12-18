@@ -45,7 +45,7 @@ public class SleepUiController : MonoBehaviour
     public void SleepButton()
     {
         Time.timeScale = 10f;
-
+        Debug.Log(Time.timeScale);
         timeCheck = true;
         player.moveCheck = false;
         player.rigid.velocity = Vector2.zero;

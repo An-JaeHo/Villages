@@ -22,21 +22,19 @@ public class WorldTime : MonoBehaviour
 
     private void Start()
     {
-        StartCoroutine(AddMinute());
-
+        dayLength = 24;
         //세이브 데이터 저장
         saveDay = new TimeSpan(1,8,20,0);
         currentTime = saveDay;
         season = 1;
         seasonChangeCheck = false;
+        StartCoroutine(AddMinute());
     }
 
     private IEnumerator AddMinute()
     {
         currentTime += TimeSpan.FromMinutes(1);
         WorldTimeChagne.Invoke(this,currentTime);
-
-        
 
         if (currentTime.Hours == 6)
         {

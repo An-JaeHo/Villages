@@ -22,9 +22,9 @@ public class WorldTime : MonoBehaviour
 
     private void Start()
     {
-        dayLength = 24;
+        dayLength = 20;
         //세이브 데이터 저장
-        saveDay = new TimeSpan(1,8,20,0);
+        saveDay = new TimeSpan(1,0,0,0);
         currentTime = saveDay;
         season = 1;
         seasonChangeCheck = false;

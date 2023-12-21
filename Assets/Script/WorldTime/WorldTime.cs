@@ -22,6 +22,8 @@ public class WorldTime : MonoBehaviour
 
     private void Start()
     {
+        //1초당 한시간 20
+        //8초당 한시간 180
         dayLength = 20;
         //세이브 데이터 저장
         saveDay = new TimeSpan(1,0,0,0);

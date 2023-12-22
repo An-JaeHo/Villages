@@ -34254,6 +34254,7 @@ MonoBehaviour:
   testPos: {x: 0, y: 0, z: 0}
   staminaBar: {fileID: 1070898323}
   sleepUi: {fileID: 894475114}
+  lifeTimeUi: {fileID: 2139790547}
 --- !u!58 &1247251202
 CircleCollider2D:
   m_ObjectHideFlags: 0

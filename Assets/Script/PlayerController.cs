@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using Unity.Burst.CompilerServices;
 using Unity.VisualScripting;
 using UnityEditor.Experimental.GraphView;
@@ -31,6 +32,7 @@ public class PlayerController : MonoBehaviour
     public bool moveCheck;
     public float stamina;
     public float maxStamina;
+    public TimeSpan lifeTime;
 
     [Header("Prfebs")]
     public GameObject lootPrefeb;
@@ -47,6 +49,7 @@ public class PlayerController : MonoBehaviour
     [Header("Ui")]
     public Image staminaBar;
     public GameObject sleepUi;
+    public TMP_Text lifeTimeUi;
 
     GameObject temp;
 
@@ -60,6 +63,8 @@ public class PlayerController : MonoBehaviour
         rigid = GetComponent<Rigidbody2D>();
         ani = GetComponent<Animator>();
         speed = 1;
+        lifeTime = new TimeSpan(10,20,0);
+        lifeTimeUi.SetText(lifeTime.ToString(@"hh\:mm"));
         worldTime = GameObject.FindGameObjectWithTag("GameController").GetComponent<WorldTime>();
     }
 

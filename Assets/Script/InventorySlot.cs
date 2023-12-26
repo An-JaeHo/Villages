@@ -43,6 +43,7 @@ public class InventorySlot : MonoBehaviour, IDropHandler
         }
     }
 
+
     public void DeSelet()
     {
         image.color = notSeletedColor;

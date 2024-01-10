@@ -38,7 +38,6 @@ public class PlayerController : MonoBehaviour
     public GameObject lootPrefeb;
     public GameObject seedPrefeb;
 
-
     [Header("FarmTile")]
     public Tilemap baseTileMap;
     public Tilemap sletMap;

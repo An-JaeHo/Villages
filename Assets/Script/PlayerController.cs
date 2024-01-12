@@ -50,7 +50,6 @@ public class PlayerController : MonoBehaviour
     public Image staminaBar;
     public GameObject sleepUi;
     public TMP_Text lifeTimeUi;
-
     GameObject temp;
 
 

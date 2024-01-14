@@ -33,8 +33,7 @@ public class PlayerController : MonoBehaviour
     public float stamina;
     public float maxStamina;
     public TimeSpan lifeTime;
-
-    [Header("Prfebs")]
+        [Header("Prfebs")]
     public GameObject lootPrefeb;
     public GameObject seedPrefeb;
 

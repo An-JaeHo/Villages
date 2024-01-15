@@ -11,6 +11,8 @@ public class InventoryManger : MonoBehaviour
     public GameObject inventoryItemPrefab;
     public int selectedSlot = -1;
 
+    public List<InventoryItem> items;
+
     private void Awake()
     {
         Instance = this;
@@ -81,6 +83,7 @@ public class InventoryManger : MonoBehaviour
         GameObject newItemGO = Instantiate(inventoryItemPrefab,slot.transform);
         InventoryItem inventoryItem = newItemGO.GetComponent<InventoryItem>();
         inventoryItem.InitialiseItem(item);
+        items.Add(inventoryItem);
     }
 
     public Item GetSelectedItem(bool use)

@@ -33,7 +33,8 @@ public class PlayerController : MonoBehaviour
     public float stamina;
     public float maxStamina;
     public TimeSpan lifeTime;
-        [Header("Prfebs")]
+
+    [Header("Prfebs")]
     public GameObject lootPrefeb;
     public GameObject seedPrefeb;
 
@@ -49,8 +50,8 @@ public class PlayerController : MonoBehaviour
     public Image staminaBar;
     public GameObject sleepUi;
     public TMP_Text lifeTimeUi;
-    GameObject temp;
 
+    GameObject temp;
 
     void Awake()
     {
@@ -73,6 +74,7 @@ public class PlayerController : MonoBehaviour
         moveHorizontal = Input.GetAxis("Horizontal");
         moveVertical = Input.GetAxis("Vertical");
         direction = new Vector2(moveHorizontal * speed, moveVertical * speed);
+        lifeTimeUi.SetText(lifeTime.ToString(@"hh\:mm"));
 
         // 아직 스테미너에 따라 움직이게 설정 안해놓음
         if (!checkAni

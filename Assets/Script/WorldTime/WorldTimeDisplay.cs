@@ -13,20 +13,25 @@ public class WorldTimeDisplay : MonoBehaviour
 
     public TMP_Text dayCount;
 
+    private void Update()
+    {
+        text.SetText(worldTime.currentTime.ToString(@"hh\:mm"));
+        dayCount.SetText(worldTime.currentTime.Days + " D");
+    }
+
     private void Awake()
     {
         text = GetComponent<TMP_Text>();
-        worldTime.WorldTimeChagne += OnWorldTimeChanged;
+        //worldTime.WorldTimeChagne += OnWorldTimeChanged;
     }
 
     private void OnDestroy()
     {
-        worldTime.WorldTimeChagne -= OnWorldTimeChanged;
+        //worldTime.WorldTimeChagne -= OnWorldTimeChanged;
     }
 
-    private void OnWorldTimeChanged(object sender, TimeSpan newTime)
-    {
-        text.SetText(newTime.ToString(@"hh\:mm"));
-        dayCount.SetText(newTime.Days + " D");
-    }
+    //private void OnWorldTimeChanged(object sender, TimeSpan newTime)
+    //{
+        
+    //}
 }

@@ -19,6 +19,7 @@ public class WorldTime : MonoBehaviour
     private float dayLength;
     private TimeSpan saveDay;
     private float minuteLength => dayLength/WorldTimeConstants.MinutesInDay;
+    private PlayerController player;
 
     private void Start()
     {
@@ -30,12 +31,15 @@ public class WorldTime : MonoBehaviour
         currentTime = saveDay;
         season = 1;
         seasonChangeCheck = false;
+        player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
         StartCoroutine(AddMinute());
     }
 
     private IEnumerator AddMinute()
     {
         currentTime += TimeSpan.FromMinutes(1);
+        player.lifeTime -= TimeSpan.FromMinutes(1);
+
         WorldTimeChagne.Invoke(this,currentTime);
 
         if (currentTime.Hours == 6)

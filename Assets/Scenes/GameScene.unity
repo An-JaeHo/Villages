@@ -37043,9 +37043,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inventoryManger: {fileID: 211620233}
-  inventoryPrefeb: {fileID: 4451295824190206734, guid: 54c21f043a6dcd045bafa7d317e18311, type: 3}
+  inventorySlotPrefeb: {fileID: 4451295824190206734, guid: 54c21f043a6dcd045bafa7d317e18311, type: 3}
   sellWindow: {fileID: 393163752}
-  sellList: []
 --- !u!1 &1596008071
 GameObject:
   m_ObjectHideFlags: 0

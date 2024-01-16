@@ -5,26 +5,34 @@ using UnityEngine;
 public class SellController : MonoBehaviour
 {
     private PlayerController player;
+    private List<GameObject> sellList;
 
     public InventoryManger inventoryManger;
-    public GameObject inventoryPrefeb;
+    public GameObject inventorySlotPrefeb;
     public GameObject sellWindow;
-    public List<GameObject> sellList;
     
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
+        sellList = new List<GameObject>();
     }
 
     public void CheckInvenItems()
     {
         if(inventoryManger.items.Count != 0)
         {
-            for (int i = 0; i < inventoryManger.items.Count; i++)
+            if(sellWindow.transform.childCount <= inventoryManger.items.Count)
             {
-                GameObject newItemGO = Instantiate(inventoryPrefeb, sellWindow.transform);
-                newItemGO.AddComponent<InventoryItem>();
-                sellList.Add(newItemGO);
+                int num = inventoryManger.items.Count - sellWindow.transform.childCount;
+
+                Debug.Log(num);
+
+                for (int i = 0; i < num; i++)
+                {
+                    Instantiate(inventorySlotPrefeb, sellWindow.transform);
+                    GameObject newItemGO = Instantiate(inventoryManger.items[i], sellWindow.transform.GetChild(i));
+                    //sellList.Add(newItemGO);
+                }
             }
         }
     }

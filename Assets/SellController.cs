@@ -52,4 +52,15 @@ public class SellController : MonoBehaviour
             }
         }
     }
+
+    public void CheckSellUiItem()
+    {
+        for (int i = 0; i < sellWindow.transform.childCount; i++)
+        {
+            if(sellWindow.transform.GetChild(i).childCount !=0)
+            {
+                //sellWindow.transform.GetChild(i).
+            }
+        }
+    }
 }

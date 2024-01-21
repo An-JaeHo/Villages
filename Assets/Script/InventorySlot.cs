@@ -11,11 +11,13 @@ public class InventorySlot : MonoBehaviour, IDropHandler
     public Image image;
     public Color seletedColor, notSeletedColor;
     public GameObject player;
+    public SellController sellController;
 
     private void Awake()
     {
         DeSelet();
         player = GameObject.FindGameObjectWithTag("Player");
+        sellController = GameObject.FindObjectOfType(typeof(SellController),true).GetComponent<SellController>();
     }
 
     public void Selet()
@@ -54,6 +56,7 @@ public class InventorySlot : MonoBehaviour, IDropHandler
         if(transform.childCount == 0) {
             InventoryItem inventoryItem = eventData.pointerDrag.GetComponent<InventoryItem>();
             inventoryItem.parentAfterDrag = transform;
+            sellController.CheckSellUiItem();
         }
     }
 }

@@ -22,7 +22,6 @@ public class InventoryItem : MonoBehaviour,IBeginDragHandler,IDragHandler,IEndDr
     private void Start()
     {
         image = GetComponent<Image>();
-        
     }
 
     public void InitialiseItem(Item newItem)

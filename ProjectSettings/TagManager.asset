@@ -9,6 +9,7 @@ TagManager:
   - Tool
   - Seed
   - House
+  - Sell
   layers:
   - Default
   - TransparentFX

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class SellController : MonoBehaviour
@@ -11,8 +12,8 @@ public class SellController : MonoBehaviour
     public GameObject inventorySlotPrefeb;
     public GameObject InvenWindow;
     public GameObject sellWindow;
-    
-    void Start()
+
+    private void Awake()
     {
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
         sellList = new List<GameObject>();
@@ -20,12 +21,11 @@ public class SellController : MonoBehaviour
 
     public void CheckInvenItems()
     {
-        if(inventoryManger.items.Count != 0)
+        if (inventoryManger.items.Count != 0)
         {
             if(InvenWindow.transform.childCount <= inventoryManger.items.Count)
             {
                 int num = inventoryManger.items.Count - InvenWindow.transform.childCount;
-                Debug.Log(num);
 
                 for (int i = 0; i < num; i++)
                 {
@@ -39,6 +39,8 @@ public class SellController : MonoBehaviour
                         if(InvenWindow.transform.GetChild(number).childCount == 0)
                         {
                             GameObject newItemGO = Instantiate(inventoryManger.items[number], InvenWindow.transform.GetChild(number));
+                            newItemGO.GetComponent<InventoryItem>().InitialiseItem(newItemGO.GetComponent<InventoryItem>().item);
+                            sellList.Add(newItemGO);
                             break;
                         }
                         else
@@ -46,8 +48,6 @@ public class SellController : MonoBehaviour
                             number++;
                         }
                     }
-
-                    //sellList.Add(newItemGO);
                 }
             }
         }
@@ -59,7 +59,7 @@ public class SellController : MonoBehaviour
         {
             if(sellWindow.transform.GetChild(i).childCount !=0)
             {
-                //sellWindow.transform.GetChild(i).
+                Debug.Log(sellWindow.transform.GetChild(i).GetChild(0).GetComponent<InventoryItem>().count * 10);
             }
         }
     }

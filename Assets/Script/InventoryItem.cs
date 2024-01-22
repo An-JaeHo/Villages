@@ -17,8 +17,6 @@ public class InventoryItem : MonoBehaviour,IBeginDragHandler,IDragHandler,IEndDr
     [HideInInspector] public Transform parentAfterDrag;
     public Transform invenUiTransform;
 
-
-
     private void Start()
     {
         image = GetComponent<Image>();

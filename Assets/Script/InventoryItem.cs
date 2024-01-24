@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEditorInternal.Profiling.Memory.Experimental;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -7,15 +8,21 @@ using UnityEngine.UI;
 
 public class InventoryItem : MonoBehaviour,IBeginDragHandler,IDragHandler,IEndDragHandler
 {
+    private SellController sellController;
 
     [Header("UI")]
     public Image image;
     public Text countText;
 
     public Item item;
+    public Transform invenUiTransform;
     [HideInInspector] public int count = 1;
     [HideInInspector] public Transform parentAfterDrag;
-    public Transform invenUiTransform;
+
+    private void Awake()
+    {
+        sellController = GameObject.FindObjectOfType(typeof(SellController), true).GetComponent<SellController>();
+    }
 
     private void Start()
     {
@@ -53,5 +60,6 @@ public class InventoryItem : MonoBehaviour,IBeginDragHandler,IDragHandler,IEndDr
     {
         image.raycastTarget = true;
         transform.SetParent(parentAfterDrag);
+        sellController.CheckSellUiItem();
     }
 }

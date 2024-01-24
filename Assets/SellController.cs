@@ -1,20 +1,25 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class SellController : MonoBehaviour
 {
     private PlayerController player;
-    private List<GameObject> sellList;
+    public List<GameObject> sellList;
+    private int sumTime;
 
     public InventoryManger inventoryManger;
     public GameObject inventorySlotPrefeb;
     public GameObject InvenWindow;
     public GameObject sellWindow;
+    public TMP_Text timeText;
 
     private void Awake()
     {
+        sumTime = 0;
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
         sellList = new List<GameObject>();
     }
@@ -40,7 +45,6 @@ public class SellController : MonoBehaviour
                         {
                             GameObject newItemGO = Instantiate(inventoryManger.items[number], InvenWindow.transform.GetChild(number));
                             newItemGO.GetComponent<InventoryItem>().InitialiseItem(newItemGO.GetComponent<InventoryItem>().item);
-                            sellList.Add(newItemGO);
                             break;
                         }
                         else
@@ -57,9 +61,41 @@ public class SellController : MonoBehaviour
     {
         for (int i = 0; i < sellWindow.transform.childCount; i++)
         {
-            if(sellWindow.transform.GetChild(i).childCount !=0)
+            if (sellWindow.transform.GetChild(i).childCount != 0)
             {
-                Debug.Log(sellWindow.transform.GetChild(i).GetChild(0).GetComponent<InventoryItem>().count * 10);
+                sumTime += sellWindow.transform.GetChild(i).GetChild(0).GetComponent<InventoryItem>().count * 10;
+            }
+        }
+
+        timeText.text = sumTime.ToString();
+        sumTime = 0;
+    }   
+
+    public void ReturnPosition()
+    {
+        if(sellList.Count !=0)
+        {
+            for (int i = 0; i < sellList.Count; i++)
+            {
+                sellList[i].transform.SetParent(sellList[i].GetComponent<InventoryItem>().invenUiTransform);
+            }
+            sumTime = 0;
+            timeText.text = sumTime.ToString();
+        }
+    }
+
+    public void SellButton()
+    {
+        for (int i = 0; i < sellList.Count; i++)
+        {
+            for (int j = 0; j < inventoryManger.items.Count; j++)
+            {
+                if (inventoryManger.items[j].GetComponent<InventoryItem>().item
+                    == sellList[i].GetComponent<InventoryItem>().item)
+                {
+                    Destroy(inventoryManger.items[j]);
+                    Destroy(sellList[i]);
+                }
             }
         }
     }

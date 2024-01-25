@@ -93,10 +93,16 @@ public class SellController : MonoBehaviour
                 if (inventoryManger.items[j].GetComponent<InventoryItem>().item
                     == sellList[i].GetComponent<InventoryItem>().item)
                 {
-                    Destroy(inventoryManger.items[j]);
+                    //Debug.Log(sellList[i].GetComponent<InventoryItem>().item);
                     Destroy(sellList[i]);
+                    Destroy(inventoryManger.items[j]);
+
+                    break;
                 }
             }
         }
+
+        //Debug.Log(inventoryManger.items.Count);
+        //Debug.Log(sellList.Count);
     }
 }

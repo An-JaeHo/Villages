@@ -60,6 +60,31 @@ public class InventoryItem : MonoBehaviour,IBeginDragHandler,IDragHandler,IEndDr
     {
         image.raycastTarget = true;
         transform.SetParent(parentAfterDrag);
+        Debug.Log(transform.parent.parent.parent.parent.name);
+
+        if (transform.parent.parent.parent.parent.name == "SellItem")
+        {
+            for (int i = 0; i < sellController.sellList.Count; i++)
+            {
+                if (gameObject == sellController.sellList[i])
+                {
+                    return;
+                }
+            }
+
+            sellController.sellList.Add(gameObject);
+        }
+        else
+        {
+            for (int i = 0; i < sellController.sellList.Count; i++)
+            {
+                if (gameObject == sellController.sellList[i])
+                {
+                    sellController.sellList.Remove(gameObject);
+                }
+            }
+        }
+
         sellController.CheckSellUiItem();
     }
 }

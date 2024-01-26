@@ -60,7 +60,6 @@ public class InventoryItem : MonoBehaviour,IBeginDragHandler,IDragHandler,IEndDr
     {
         image.raycastTarget = true;
         transform.SetParent(parentAfterDrag);
-        Debug.Log(transform.parent.parent.parent.parent.name);
 
         if (transform.parent.parent.parent.parent.name == "SellItem")
         {

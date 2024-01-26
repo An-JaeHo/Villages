@@ -30,6 +30,7 @@ public class SellController : MonoBehaviour
         {
             if(InvenWindow.transform.childCount <= inventoryManger.items.Count)
             {
+                //미리 만들어진 칸때문에 새로 채워진 곳에 안만들어짐
                 int num = inventoryManger.items.Count - InvenWindow.transform.childCount;
 
                 for (int i = 0; i < num; i++)
@@ -45,6 +46,7 @@ public class SellController : MonoBehaviour
                         {
                             GameObject newItemGO = Instantiate(inventoryManger.items[number], InvenWindow.transform.GetChild(number));
                             newItemGO.GetComponent<InventoryItem>().InitialiseItem(newItemGO.GetComponent<InventoryItem>().item);
+                            Debug.Log("MakeItem");
                             break;
                         }
                         else
@@ -91,18 +93,21 @@ public class SellController : MonoBehaviour
             for (int j = 0; j < inventoryManger.items.Count; j++)
             {
                 if (inventoryManger.items[j].GetComponent<InventoryItem>().item
-                    == sellList[i].GetComponent<InventoryItem>().item)
+                    == sellList[i].GetComponent<InventoryItem>().item
+                    && inventoryManger.items[j].GetComponent<InventoryItem>().count
+                    == sellList[i].GetComponent<InventoryItem>().count)
                 {
-                    //Debug.Log(sellList[i].GetComponent<InventoryItem>().item);
                     Destroy(sellList[i]);
                     Destroy(inventoryManger.items[j]);
+
+                    sellList.Remove(sellList[i]);
+                    inventoryManger.items.Remove(inventoryManger.items[j]);
 
                     break;
                 }
             }
         }
 
-        //Debug.Log(inventoryManger.items.Count);
-        //Debug.Log(sellList.Count);
+        CheckSellUiItem();
     }
 }

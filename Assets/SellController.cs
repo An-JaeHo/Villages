@@ -92,6 +92,7 @@ public class SellController : MonoBehaviour
         {
             for (int j = 0; j < inventoryManger.items.Count; j++)
             {
+                //여긴 왜또 문제일까
                 if (inventoryManger.items[j].GetComponent<InventoryItem>().item
                     == sellList[i].GetComponent<InventoryItem>().item
                     && inventoryManger.items[j].GetComponent<InventoryItem>().count
@@ -102,8 +103,6 @@ public class SellController : MonoBehaviour
 
                     sellList.Remove(sellList[i]);
                     inventoryManger.items.Remove(inventoryManger.items[j]);
-
-                    break;
                 }
             }
         }

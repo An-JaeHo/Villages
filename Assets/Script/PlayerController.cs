@@ -24,8 +24,6 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private List<GameObject> seeds;
     [SerializeField] private List<GameObject> gateringObj;
 
-
-
     [Header("PlayerInfo")]
     public Rigidbody2D rigid;
     public Animator ani;

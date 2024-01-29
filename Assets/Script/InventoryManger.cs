@@ -12,10 +12,12 @@ public class InventoryManger : MonoBehaviour
     public int selectedSlot = -1;
 
     public List<GameObject> items;
+    public List<GameObject> havingItemSlots;
 
     private void Awake()
     {
         Instance = this;
+        havingItemSlots = new List<GameObject>();
     }
 
     private void Start()
@@ -68,6 +70,7 @@ public class InventoryManger : MonoBehaviour
         {
             InventorySlot slot = inventorySlots[i];
             InventoryItem itemSlot = slot.GetComponentInChildren<InventoryItem>();
+
             if(itemSlot == null)
             {
                 SpawnNewItem(item, slot);

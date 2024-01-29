@@ -84,6 +84,29 @@ public class InventoryItem : MonoBehaviour,IBeginDragHandler,IDragHandler,IEndDr
             }
         }
 
+        if (transform.parent.parent.parent.parent.name == "InvenItem")
+        {
+            for (int i = 0; i < sellController.invenList.Count; i++)
+            {
+                if (gameObject == sellController.invenList[i])
+                {
+                    return;
+                }
+            }
+
+            sellController.invenList.Add(gameObject);
+        }
+        else
+        {
+            for (int i = 0; i < sellController.invenList.Count; i++)
+            {
+                if (gameObject == sellController.invenList[i])
+                {
+                    sellController.invenList.Remove(gameObject);
+                }
+            }
+        }
+
         sellController.CheckSellUiItem();
     }
 }

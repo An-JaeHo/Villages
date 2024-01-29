@@ -9,7 +9,9 @@ public class SellController : MonoBehaviour
 {
     private PlayerController player;
     public List<GameObject> sellList;
+    public List<GameObject> invenList;
     private int sumTime;
+    private int itemNumber;
 
     public InventoryManger inventoryManger;
     public GameObject inventorySlotPrefeb;
@@ -22,39 +24,56 @@ public class SellController : MonoBehaviour
         sumTime = 0;
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
         sellList = new List<GameObject>();
+        invenList = new List<GameObject>();
     }
 
     public void CheckInvenItems()
     {
         if (inventoryManger.items.Count != 0)
         {
-            if(InvenWindow.transform.childCount <= inventoryManger.items.Count)
+            if (invenList.Count < inventoryManger.items.Count)
             {
-                //미리 만들어진 칸때문에 새로 채워진 곳에 안만들어짐
-                int num = inventoryManger.items.Count - InvenWindow.transform.childCount;
+                Debug.Log("New Slot");
+                int num = inventoryManger.items.Count - invenList.Count;
 
                 for (int i = 0; i < num; i++)
                 {
                     Instantiate(inventorySlotPrefeb, InvenWindow.transform);
                     Instantiate(inventorySlotPrefeb, sellWindow.transform);
 
-                    int number = i;
+                    itemNumber = i;
 
                     while (true)
                     {
-                        if(InvenWindow.transform.GetChild(number).childCount == 0)
+                        if (InvenWindow.transform.GetChild(itemNumber).childCount == 0)
                         {
-                            GameObject newItemGO = Instantiate(inventoryManger.items[number], InvenWindow.transform.GetChild(number));
+                            GameObject newItemGO = Instantiate(inventoryManger.items[itemNumber], InvenWindow.transform.GetChild(itemNumber));
                             newItemGO.GetComponent<InventoryItem>().InitialiseItem(newItemGO.GetComponent<InventoryItem>().item);
-                            Debug.Log("MakeItem");
+                            invenList.Add(newItemGO);
                             break;
                         }
                         else
                         {
-                            number++;
+                            itemNumber++;
                         }
                     }
                 }
+
+
+            }
+            else
+            {
+                //int num = InvenWindow.transform.childCount - inventoryManger.items.Count;
+                //
+                //for (int i = 0; i < num; i++)
+                //{
+                //    if(InvenWindow.transform.GetChild(i).childCount == 0)
+                //    {
+                //        GameObject newItemGO = Instantiate(inventoryManger.items[itemNumber], InvenWindow.transform.GetChild(i));
+                //        newItemGO.GetComponent<InventoryItem>().InitialiseItem(newItemGO.GetComponent<InventoryItem>().item);
+                //        itemNumber++;
+                //    }
+                //}
             }
         }
     }
@@ -88,11 +107,10 @@ public class SellController : MonoBehaviour
 
     public void SellButton()
     {
-        for (int i = 0; i < sellList.Count; i++)
+        for (int j = 0; j < inventoryManger.items.Count; j++)
         {
-            for (int j = 0; j < inventoryManger.items.Count; j++)
+            for (int i = 0; i < sellList.Count; i++)
             {
-                //여긴 왜또 문제일까
                 if (inventoryManger.items[j].GetComponent<InventoryItem>().item
                     == sellList[i].GetComponent<InventoryItem>().item
                     && inventoryManger.items[j].GetComponent<InventoryItem>().count
@@ -101,12 +119,14 @@ public class SellController : MonoBehaviour
                     Destroy(sellList[i]);
                     Destroy(inventoryManger.items[j]);
 
-                    sellList.Remove(sellList[i]);
                     inventoryManger.items.Remove(inventoryManger.items[j]);
+                    sellList.Remove(sellList[i]);
+                    itemNumber = inventoryManger.items.Count;
                 }
             }
         }
 
         CheckSellUiItem();
+        timeText.text = sumTime.ToString();
     }
 }

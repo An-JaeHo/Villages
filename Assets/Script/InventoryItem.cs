@@ -72,6 +72,7 @@ public class InventoryItem : MonoBehaviour,IBeginDragHandler,IDragHandler,IEndDr
             }
 
             sellController.sellList.Add(gameObject);
+            sellController.sumTime += 10;
         }
         else
         {
@@ -82,6 +83,8 @@ public class InventoryItem : MonoBehaviour,IBeginDragHandler,IDragHandler,IEndDr
                     sellController.sellList.Remove(gameObject);
                 }
             }
+
+            sellController.sumTime -= 10;
         }
 
         if (transform.parent.parent.parent.parent.name == "InvenItem")
@@ -107,6 +110,6 @@ public class InventoryItem : MonoBehaviour,IBeginDragHandler,IDragHandler,IEndDr
             }
         }
 
-        sellController.CheckSellUiItem();
+        sellController.timeText.text = sellController.sumTime.ToString(); 
     }
 }

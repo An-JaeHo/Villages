@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -10,11 +11,10 @@ public class SellController : MonoBehaviour
     private PlayerController player;
     public List<GameObject> sellList;
     public List<GameObject> invenList;
-    private int sumTime;
+    public int sumTime;
     private int itemNumber;
 
     public InventoryManger inventoryManger;
-    public GameObject inventorySlotPrefeb;
     public GameObject InvenWindow;
     public GameObject sellWindow;
     public TMP_Text timeText;
@@ -27,70 +27,60 @@ public class SellController : MonoBehaviour
         invenList = new List<GameObject>();
     }
 
+    //생각해야되는것
+
     public void CheckInvenItems()
     {
-        if (inventoryManger.items.Count != 0)
+        if (inventoryManger.items.Count != 0
+            && invenList.Count < inventoryManger.items.Count)
         {
-            if (invenList.Count < inventoryManger.items.Count)
+            int num = inventoryManger.items.Count - invenList.Count;
+
+            if (invenList.Count ==0)
             {
-                Debug.Log("New Slot");
-                int num = inventoryManger.items.Count - invenList.Count;
+                for (int i = 0; i < num; i++)
+                {
+                    itemNumber = i;
+
+                    if (InvenWindow.transform.GetChild(i).childCount == 0)
+                    {
+                        GameObject newItemGO = Instantiate(inventoryManger.items[itemNumber], InvenWindow.transform.GetChild(itemNumber));
+                        newItemGO.GetComponent<InventoryItem>().InitialiseItem(newItemGO.GetComponent<InventoryItem>().item);
+                        invenList.Add(newItemGO);
+                    }
+                }
+            }
+            else
+            {
+                int chek =0;
+                int childNum = 0;
 
                 for (int i = 0; i < num; i++)
                 {
-                    Instantiate(inventorySlotPrefeb, InvenWindow.transform);
-                    Instantiate(inventorySlotPrefeb, sellWindow.transform);
-
-                    itemNumber = i;
-
-                    while (true)
+                    while (chek < 50)
                     {
-                        if (InvenWindow.transform.GetChild(itemNumber).childCount == 0)
+                        if (InvenWindow.transform.GetChild(childNum).childCount == 0)
                         {
-                            GameObject newItemGO = Instantiate(inventoryManger.items[itemNumber], InvenWindow.transform.GetChild(itemNumber));
+                            GameObject newItemGO = Instantiate(inventoryManger.items[itemNumber], InvenWindow.transform.GetChild(childNum));
                             newItemGO.GetComponent<InventoryItem>().InitialiseItem(newItemGO.GetComponent<InventoryItem>().item);
                             invenList.Add(newItemGO);
+                            itemNumber++;
                             break;
                         }
                         else
                         {
-                            itemNumber++;
+                            childNum++;
                         }
+
+                        chek++;
                     }
                 }
-
-
-            }
-            else
-            {
-                //int num = InvenWindow.transform.childCount - inventoryManger.items.Count;
-                //
-                //for (int i = 0; i < num; i++)
-                //{
-                //    if(InvenWindow.transform.GetChild(i).childCount == 0)
-                //    {
-                //        GameObject newItemGO = Instantiate(inventoryManger.items[itemNumber], InvenWindow.transform.GetChild(i));
-                //        newItemGO.GetComponent<InventoryItem>().InitialiseItem(newItemGO.GetComponent<InventoryItem>().item);
-                //        itemNumber++;
-                //    }
-                //}
             }
         }
-    }
 
-    public void CheckSellUiItem()
-    {
-        for (int i = 0; i < sellWindow.transform.childCount; i++)
-        {
-            if (sellWindow.transform.GetChild(i).childCount != 0)
-            {
-                sumTime += sellWindow.transform.GetChild(i).GetChild(0).GetComponent<InventoryItem>().count * 10;
-            }
-        }
 
         timeText.text = sumTime.ToString();
-        sumTime = 0;
-    }   
+    }
 
     public void ReturnPosition()
     {
@@ -100,7 +90,7 @@ public class SellController : MonoBehaviour
             {
                 sellList[i].transform.SetParent(sellList[i].GetComponent<InventoryItem>().invenUiTransform);
             }
-            sumTime = 0;
+
             timeText.text = sumTime.ToString();
         }
     }
@@ -126,7 +116,15 @@ public class SellController : MonoBehaviour
             }
         }
 
-        CheckSellUiItem();
+        player.lifeTime = new System.TimeSpan(player.lifeTime.Hours + sumTime, player.lifeTime.Minutes, 0);
+
+        if (player.lifeTime.Hours > 0.24)
+        {
+            player.lifeTime = new System.TimeSpan(24, 0, 0);
+        }
+
+        player.lifeTimeUi.SetText(player.lifeTime.ToString(@"hh\:mm"));
+        sumTime = 0;
         timeText.text = sumTime.ToString();
     }
 }

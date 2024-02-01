@@ -449,8 +449,6 @@ public class PlayerController : MonoBehaviour
                 seeds.Add(collision.gameObject);
             }
         }
-
-        
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

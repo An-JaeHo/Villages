@@ -431,6 +431,7 @@ public class PlayerController : MonoBehaviour
                 if (!trees.Contains(collision.gameObject))
                 {
                     trees.Add(collision.gameObject);
+
                 }
             }
         }

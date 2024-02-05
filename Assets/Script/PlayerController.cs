@@ -492,6 +492,8 @@ public class PlayerController : MonoBehaviour
 
     private void CheckObjDistance(List<GameObject> Objs)
     {
+
+
         if (Objs.Count > 1)
         {
             temp = Objs[0];

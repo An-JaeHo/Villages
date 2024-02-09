@@ -479,6 +479,7 @@ public class PlayerController : MonoBehaviour
                 trees.Remove(collision.gameObject);
             }
             
+
         }
         else if (collision.tag == "Seed")
         {

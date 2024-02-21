@@ -454,9 +454,7 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.tag == "House"
-            
-            )
+        if (collision.tag == "House")
         {
             sleepUi.SetActive(true);
             Time.timeScale = 0f;

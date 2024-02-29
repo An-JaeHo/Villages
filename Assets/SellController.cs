@@ -27,7 +27,6 @@ public class SellController : MonoBehaviour
         invenList = new List<GameObject>();
     }
 
-    //생각해야되는것
 
     public void CheckInvenItems()
     {

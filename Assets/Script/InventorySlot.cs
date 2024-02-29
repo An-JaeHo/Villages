@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
-using static UnityEditor.Progress;
-using Unity.VisualScripting;
 
 public class InventorySlot : MonoBehaviour, IDropHandler
 {

@@ -29,9 +29,4 @@ public class WorldTimeDisplay : MonoBehaviour
     {
         //worldTime.WorldTimeChagne -= OnWorldTimeChanged;
     }
-
-    //private void OnWorldTimeChanged(object sender, TimeSpan newTime)
-    //{
-        
-    //}
 }

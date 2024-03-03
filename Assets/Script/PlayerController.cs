@@ -76,11 +76,10 @@ public class PlayerController : MonoBehaviour
             && moveCheck)
         {
             if (Input.GetKeyDown(KeyCode.Space)
-                && moveHorizontal == 0
-                && moveVertical == 0
                 )
             {
                 temp = null;
+
                 if (item != null)
                 {
                     switch (item.actionType)
@@ -90,13 +89,15 @@ public class PlayerController : MonoBehaviour
                             break;
                         case ActionType.Plant:
                             CheckObjDistance(seeds);
+                            FarmSystem();
+                            break;
+                        case ActionType.Farming:
+                            FarmSystem();
                             break;
                         default:
-                            temp = null;
+                            CheckObjDistance(gateringObj);
                             break;
                     }
-
-                    FarmSystem();
                 }
                 else
                 {
@@ -108,6 +109,7 @@ public class PlayerController : MonoBehaviour
                 if (Vector2.Distance(transform.position, temp.transform.position) < 0.5f)
                 {
                     ani.SetBool("IsWalking", false);
+                    rigid.velocity = Vector2.zero;
                     checkAni = true;
 
                     if (item != null)
@@ -420,7 +422,6 @@ public class PlayerController : MonoBehaviour
                 if (!trees.Contains(collision.gameObject))
                 {
                     trees.Add(collision.gameObject);
-
                 }
             }
         }

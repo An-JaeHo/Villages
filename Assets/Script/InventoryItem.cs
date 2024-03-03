@@ -71,7 +71,7 @@ public class InventoryItem : MonoBehaviour,IBeginDragHandler,IDragHandler,IEndDr
             }
 
             sellController.sellList.Add(gameObject);
-            sellController.sumTime += 10;
+            sellController.sumTime += 10* count;
         }
         else
         {
@@ -83,7 +83,7 @@ public class InventoryItem : MonoBehaviour,IBeginDragHandler,IDragHandler,IEndDr
                 }
             }
 
-            sellController.sumTime -= 10;
+            sellController.sumTime -= 10*count;
         }
 
         if (transform.parent.parent.parent.parent.name == "InvenItem")

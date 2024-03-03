@@ -21,12 +21,9 @@ public class SeedController : MonoBehaviour
     public int glow;
     public GameObject fruitPrefeb;
 
-
     private Color paleBrown = new Color32(255, 255, 255, 255);
     private Color brown = new Color32(255, 192, 192, 255);
     private Color darkBrown = new Color32(172, 90, 90, 255);
-
-
 
     void Start()
     {

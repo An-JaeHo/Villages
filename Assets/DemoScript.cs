@@ -11,14 +11,6 @@ public class DemoScript : MonoBehaviour
     {
         bool result = inventoryManger.AddItem(itemToPickup[id]);
         inventoryManger.ChangeSelectedSlot(inventoryManger.selectedSlot);
-        if (result == true)
-        {
-            Debug.Log("Add");
-        }
-        else
-        {
-            Debug.Log("fail");
-        }
     }
 
     public void GetSelectedItem()

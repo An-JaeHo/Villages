@@ -72,7 +72,6 @@ public class PlayerController : MonoBehaviour
         direction = new Vector2(moveHorizontal * speed, moveVertical * speed);
         lifeTimeUi.SetText(lifeTime.ToString(@"hh\:mm"));
 
-        // 아직 스테미너에 따라 움직이게 설정 안해놓음
         if (!checkAni
             && moveCheck)
         {
@@ -174,10 +173,6 @@ public class PlayerController : MonoBehaviour
             {
                 Move();
             }
-        }
-        else
-        {
-            
         }
     }
 
@@ -362,8 +357,6 @@ public class PlayerController : MonoBehaviour
             seed.GetComponent<SeedController>().myItemInfo = item;
             stamina -= 10;
             seedVector.Add(seedPos);
-
-            
         }
         else
         {
@@ -421,7 +414,6 @@ public class PlayerController : MonoBehaviour
                         gateringObj.Add(collision.gameObject);
                     }
                 }
-
             }
             else
             {

@@ -71,7 +71,7 @@ public class PlayerController : MonoBehaviour
         moveVertical = Input.GetAxis("Vertical");
         direction = new Vector2(moveHorizontal * speed, moveVertical * speed);
         lifeTimeUi.SetText(lifeTime.ToString(@"hh\:mm"));
-
+        lifeTime -= TimeSpan.FromMinutes(1) * Time.deltaTime*8;
         if (!checkAni
             && moveCheck)
         {

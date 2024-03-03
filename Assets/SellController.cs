@@ -117,10 +117,10 @@ public class SellController : MonoBehaviour
 
         player.lifeTime = new System.TimeSpan(player.lifeTime.Hours + sumTime, player.lifeTime.Minutes, 0);
 
-        if (player.lifeTime.Hours > 0.24)
-        {
-            player.lifeTime = new System.TimeSpan(24, 0, 0);
-        }
+        Debug.Log(player.lifeTime.Days);
+
+
+
 
         player.lifeTimeUi.SetText(player.lifeTime.ToString(@"hh\:mm"));
         sumTime = 0;

@@ -15,7 +15,6 @@ public class InventorySlot : MonoBehaviour, IDropHandler
     {
         DeSelet();
         player = GameObject.FindGameObjectWithTag("Player");
-        
     }
 
     public void Selet()

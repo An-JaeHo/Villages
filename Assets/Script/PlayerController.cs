@@ -72,11 +72,11 @@ public class PlayerController : MonoBehaviour
         direction = new Vector2(moveHorizontal * speed, moveVertical * speed);
         lifeTimeUi.SetText(lifeTime.ToString(@"hh\:mm"));
         lifeTime -= TimeSpan.FromMinutes(1) * Time.deltaTime*8;
+
         if (!checkAni
             && moveCheck)
         {
-            if (Input.GetKeyDown(KeyCode.Space)
-                )
+            if (Input.GetKeyDown(KeyCode.Space))
             {
                 temp = null;
 

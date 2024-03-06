@@ -77,7 +77,6 @@ public class SellController : MonoBehaviour
             }
         }
 
-
         timeText.text = sumTime.ToString();
     }
 
@@ -116,11 +115,6 @@ public class SellController : MonoBehaviour
         }
 
         player.lifeTime = new System.TimeSpan(player.lifeTime.Hours + sumTime, player.lifeTime.Minutes, 0);
-
-        Debug.Log(player.lifeTime.Days);
-
-
-
 
         player.lifeTimeUi.SetText(player.lifeTime.ToString(@"hh\:mm"));
         sumTime = 0;

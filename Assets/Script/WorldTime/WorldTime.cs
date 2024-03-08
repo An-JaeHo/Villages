@@ -39,7 +39,6 @@ public class WorldTime : MonoBehaviour
     {
         currentTime += TimeSpan.FromMinutes(1);
         //player.lifeTime -= TimeSpan.FromMinutes(1);
-
         WorldTimeChagne.Invoke(this,currentTime);
 
         if (currentTime.Hours == 6)
@@ -104,7 +103,6 @@ public class WorldTime : MonoBehaviour
                     break;
             }
         }
-
 
         if (currentTime.Days % 3 != 0)
         {

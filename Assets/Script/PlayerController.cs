@@ -133,7 +133,6 @@ public class PlayerController : MonoBehaviour
                             {
                                 temp.GetComponent<SeedController>().SpawnFruit();
                             }
-
                             checkAni = false;
                         }
                     }

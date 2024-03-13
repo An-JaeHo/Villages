@@ -478,6 +478,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    //오브젝트 간의 거리 계산
     private void CheckObjDistance(List<GameObject> Objs)
     {
         if (Objs.Count > 1)

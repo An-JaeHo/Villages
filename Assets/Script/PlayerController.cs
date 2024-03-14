@@ -368,7 +368,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    //각 도구별 오브젝트 정리시에 바꿔줄 예정
+    //플레이어 행동후 각 태그에 따라 반응
     public void CallBackAni()
     {
         if (temp != null
@@ -377,7 +377,7 @@ public class PlayerController : MonoBehaviour
             switch (temp.tag)
             {
                 case "Tree":
-                    //2번으로 나무 베이게 만듬
+                    //2번의 도끼질로 나무 베기
                     temp.GetComponent<ObjectController>().durability -= 50;
 
                     if(temp.GetComponent<ObjectController>().durability <=0)

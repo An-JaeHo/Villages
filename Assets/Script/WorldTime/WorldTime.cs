@@ -35,6 +35,7 @@ public class WorldTime : MonoBehaviour
         StartCoroutine(AddMinute());
     }
 
+    //세계 시간
     private IEnumerator AddMinute()
     {
         currentTime += TimeSpan.FromMinutes(1);

@@ -42,6 +42,7 @@ public class WorldTime : MonoBehaviour
         //player.lifeTime -= TimeSpan.FromMinutes(1);
         WorldTimeChagne.Invoke(this,currentTime);
 
+        //6시를 기준으로 낮과 밤을 구분
         if (currentTime.Hours == 6)
         {
             if (currentTime.Days % 3 == 0 && seasonChangeCheck)

@@ -28,6 +28,7 @@ public class InventoryItem : MonoBehaviour,IBeginDragHandler,IDragHandler,IEndDr
         image = GetComponent<Image>();
     }
 
+    //새로운 아이템 제작 -> 아이템 정보와 이미지 저장
     public void InitialiseItem(Item newItem)
     {
         item = newItem;

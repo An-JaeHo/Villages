@@ -25,7 +25,6 @@ public class SpawnTree : MonoBehaviour
             {
                 lastPos.Add(new Vector2(i, j));
             }
-            
         }
     }
 

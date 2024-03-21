@@ -46,6 +46,7 @@ public class SpawnTree : MonoBehaviour
         
     }
 
+    //나무 생성
     private void SpawnTrees()
     {
         Vector2 spawnPos = new Vector2((int)Random.Range(topLeft.x, bottomRigh.x), (int)Random.Range(topLeft.y, bottomRigh.y));

@@ -16,6 +16,7 @@ public class Loot : MonoBehaviour
         sprite.sprite = item.uiImage;
     }
 
+    //범위안에 들어왔을때
     private void OnTriggerEnter2D(Collider2D other)
     {
         if(other.CompareTag("Player"))
@@ -26,6 +27,7 @@ public class Loot : MonoBehaviour
         }
     }
 
+    //범위안에 들어오지 않았을때
     private IEnumerator MoveAndCollect(Transform target)
     {
         Destroy(collider);

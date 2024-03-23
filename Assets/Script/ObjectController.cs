@@ -39,7 +39,6 @@ public class ObjectController : MonoBehaviour
         transform.localScale = new Vector2(1f, 1f);
         growDay = worldTime.currentTime.Days;
         objName = treeNames[Random.Range(0, treeNames.Length)];
-
         LoadItemInfo(objName);
     }
 

@@ -353,6 +353,7 @@ public class PlayerController : MonoBehaviour
                 }
             }
 
+
             GameObject seed = Instantiate(seedPrefeb, seedPos, Quaternion.identity);
             seed.GetComponent<SeedController>().farmTile = farmMap;
             seed.GetComponent<SeedController>().myItemInfo = item;

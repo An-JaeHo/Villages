@@ -34,6 +34,7 @@ public class SeedController : MonoBehaviour
         glow = 1;
         myPosition = Vector3Int.FloorToInt(transform.position);
         farmTile.SetTileFlags(myPosition, TileFlags.None);
+
     }
 
     void Update()

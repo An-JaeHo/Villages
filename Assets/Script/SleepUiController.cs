@@ -21,6 +21,7 @@ public class SleepUiController : MonoBehaviour
     {
         if(timeCheck)
         {
+
             if (nowHours + 1 == worldTime.currentTime.Hours)
             {
                 if(player.stamina <= player.maxStamina)

@@ -13,6 +13,8 @@ public class MoveCamera : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player").transform;
     }
 
+
+
     private void FixedUpdate()
     {
         Vector3 targetPos = new Vector3(player.position.x, player.position.y, this.transform.position.z);

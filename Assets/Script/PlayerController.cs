@@ -331,6 +331,7 @@ public class PlayerController : MonoBehaviour
         if (item.actionType == ActionType.Farming)
         {
             ani.SetTrigger("UsingHoe");
+
             checkAni = true;
             farmMap.SetTile(testPos, farmTile);
             farmMap.RefreshAllTiles();

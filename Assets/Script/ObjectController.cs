@@ -40,6 +40,7 @@ public class ObjectController : MonoBehaviour
         growDay = worldTime.currentTime.Days;
         objName = treeNames[Random.Range(0, treeNames.Length)];
         LoadItemInfo(objName);
+
     }
 
     void Update()

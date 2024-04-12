@@ -41,6 +41,7 @@ public class ObjectController : MonoBehaviour
         objName = treeNames[Random.Range(0, treeNames.Length)];
         LoadItemInfo(objName);
 
+
     }
 
     void Update()
